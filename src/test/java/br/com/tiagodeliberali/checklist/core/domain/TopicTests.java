@@ -11,6 +11,7 @@ class TopicTests {
     void create_topic_with_requirements() {
         Topic topic = Topic.create(
                 "testability",
+                10,
                 Theme.create(6, "stability"),
                 Arrays.asList(
                     Requirement.create(Grade.from(0.25), "description one"),
@@ -26,7 +27,7 @@ class TopicTests {
 
     @Test
     void add_requirement_to_topic() throws TopicRequirementAlreadyExistsException {
-        Topic topic = Topic.create("testability", Theme.create(6, "stability"));
+        Topic topic = Topic.create("testability", 5, Theme.create(6, "stability"));
 
         topic.addRequirement(Grade.from(0.25), "description one");
 
@@ -38,6 +39,7 @@ class TopicTests {
     void max_loss_is_one() {
         Topic topic = Topic.create(
                 "testability",
+                10,
                 Theme.create(6, "stability"),
                 Arrays.asList(
                         Requirement.create(Grade.from(0.75), "description one"),
@@ -52,6 +54,7 @@ class TopicTests {
     void remove_requirement_from_topic() throws TopicRequirementNotFoundException {
         Topic topic = Topic.create(
                 "testability",
+                10,
                 Theme.create(6, "stability"),
                 Arrays.asList(
                         Requirement.create(Grade.from(0.5), "description one"),

@@ -13,7 +13,7 @@ public class Topic {
     private final String description;
     private final RequirementList requirements;
 
-    public static Topic create(String description, Theme theme, List<TopicRequirement> requirements) {
+    public static Topic create(String description, Theme theme, List<Requirement> requirements) {
         return new Topic(
                 new TopicId(UUID.randomUUID()), theme, description, RequirementList.from(new ArrayList<>(requirements)));
     }
@@ -31,10 +31,10 @@ public class Topic {
     }
 
     public void addRequirement(Grade grade, String description) throws TopicRequirementAlreadyExistsException {
-        requirements.add(TopicRequirement.create(grade, description));
+        requirements.add(Requirement.create(grade, description));
     }
 
     public void removeRequirement(Grade grade, String description) throws TopicRequirementNotFoundException {
-        requirements.remove(TopicRequirement.create(grade, description));
+        requirements.remove(Requirement.create(grade, description));
     }
 }

@@ -9,23 +9,23 @@ class RequirementListTests {
     @Test
     void should_throw_exception_if_try_to_remove_requirement_that_not_exists() {
         RequirementList list = RequirementList.from(Arrays.asList(
-                TopicRequirement.create(Grade.from(0.5), "description one"),
-                TopicRequirement.create(Grade.from(0.4), "another description")
+                Requirement.create(Grade.from(0.5), "description one"),
+                Requirement.create(Grade.from(0.4), "another description")
         ));
 
         Assertions.assertThrows(TopicRequirementNotFoundException.class, () ->
-                list.remove(TopicRequirement.create(Grade.from(0.5), "new requirement")));
+                list.remove(Requirement.create(Grade.from(0.5), "new requirement")));
     }
 
     @Test
     void should_throw_exception_if_try_to_add_existing_requirement() {
         RequirementList list = RequirementList.from(Arrays.asList(
-                        TopicRequirement.create(Grade.from(0.5), "description one"),
-                        TopicRequirement.create(Grade.from(0.4), "another description")
+                        Requirement.create(Grade.from(0.5), "description one"),
+                        Requirement.create(Grade.from(0.4), "another description")
                 )
         );
 
         Assertions.assertThrows(TopicRequirementAlreadyExistsException.class, () ->
-                list.add(TopicRequirement.create(Grade.from(0.4), "another description")));
+                list.add(Requirement.create(Grade.from(0.4), "another description")));
     }
 }

@@ -7,9 +7,9 @@ import java.util.List;
 
 @AllArgsConstructor
 public class RequirementList {
-    private final List<TopicRequirement> requirements;
+    private final List<Requirement> requirements;
 
-    public static RequirementList from(List<TopicRequirement> list) {
+    public static RequirementList from(List<Requirement> list) {
         return new RequirementList(list);
     }
 
@@ -17,7 +17,7 @@ public class RequirementList {
         return new RequirementList(new ArrayList<>());
     }
 
-    public void remove(TopicRequirement requirement) throws TopicRequirementNotFoundException {
+    public void remove(Requirement requirement) throws TopicRequirementNotFoundException {
         if (!requirements.contains(requirement)) {
             throw new TopicRequirementNotFoundException(requirement);
         }
@@ -25,7 +25,7 @@ public class RequirementList {
         requirements.remove(requirement);
     }
 
-    public void add(TopicRequirement requirement) throws TopicRequirementAlreadyExistsException {
+    public void add(Requirement requirement) throws TopicRequirementAlreadyExistsException {
         if (requirements.contains(requirement)) {
             throw new TopicRequirementAlreadyExistsException(requirement);
         }

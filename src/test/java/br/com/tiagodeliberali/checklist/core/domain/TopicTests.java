@@ -13,10 +13,10 @@ class TopicTests {
                 "testability",
                 Theme.create(6, "stability"),
                 Arrays.asList(
-                    TopicRequirement.create(Grade.from(0.25), "description one"),
-                    TopicRequirement.create(Grade.from(0.25), "another description"),
-                    TopicRequirement.create(Grade.from(0.25), "a third description value"),
-                    TopicRequirement.create(Grade.from(0.25), "last issue to be named")
+                    Requirement.create(Grade.from(0.25), "description one"),
+                    Requirement.create(Grade.from(0.25), "another description"),
+                    Requirement.create(Grade.from(0.25), "a third description value"),
+                    Requirement.create(Grade.from(0.25), "last issue to be named")
                 )
         );
 
@@ -40,8 +40,8 @@ class TopicTests {
                 "testability",
                 Theme.create(6, "stability"),
                 Arrays.asList(
-                        TopicRequirement.create(Grade.from(0.75), "description one"),
-                        TopicRequirement.create(Grade.from(0.75), "another description")
+                        Requirement.create(Grade.from(0.75), "description one"),
+                        Requirement.create(Grade.from(0.75), "another description")
                 )
         );
 
@@ -54,8 +54,8 @@ class TopicTests {
                 "testability",
                 Theme.create(6, "stability"),
                 Arrays.asList(
-                        TopicRequirement.create(Grade.from(0.5), "description one"),
-                        TopicRequirement.create(Grade.from(0.4), "another description")
+                        Requirement.create(Grade.from(0.5), "description one"),
+                        Requirement.create(Grade.from(0.4), "another description")
                 )
         );
 

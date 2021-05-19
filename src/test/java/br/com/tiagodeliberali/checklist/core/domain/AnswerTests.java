@@ -18,7 +18,7 @@ class AnswerTests {
     void add_missing_requirement_reduces_grade() throws TopicRequirementAlreadyExistsException {
         Answer answer = Answer.create(new TopicId(UUID.randomUUID()));
 
-        answer.addMissingRequirement(TopicRequirement.create(Grade.from(0.25), "Missing something"));
+        answer.addMissingRequirement(Requirement.create(Grade.from(0.25), "Missing something"));
 
         assertThat(answer.getScore()).isEqualTo(Grade.from(0.75));
     }

@@ -15,11 +15,11 @@ public class Answer {
         return Grade.MAX.minus(missedRequirements.getGrade().grade().doubleValue());
     }
 
-    public void addMissingRequirement(TopicRequirement missingRequirement) throws TopicRequirementAlreadyExistsException {
+    public void addMissingRequirement(Requirement missingRequirement) throws TopicRequirementAlreadyExistsException {
         missedRequirements.add(missingRequirement);
     }
 
-    public void removeMissingRequirement(TopicRequirement missingRequirement) throws TopicRequirementNotFoundException {
+    public void removeMissingRequirement(Requirement missingRequirement) throws TopicRequirementNotFoundException {
         missedRequirements.remove(missingRequirement);
     }
 }

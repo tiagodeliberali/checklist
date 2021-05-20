@@ -2,6 +2,7 @@ package br.com.tiagodeliberali.checklist.core.domain;
 
 import lombok.AllArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -13,25 +14,25 @@ public class RequirementList {
         return new RequirementList(list);
     }
 
-    public void remove(RequirementName name) throws TopicRequirementNotFoundException {
+    public void remove(RequirementName name) throws RequirementNotFoundException {
         Optional<Requirement> requirement = requirements.stream()
-                .filter(x -> x.name() == name)
+                .filter(x -> x.name().equals(name))
                 .findFirst();
 
         if (requirement.isEmpty()) {
-            throw new TopicRequirementNotFoundException(name);
+            throw new RequirementNotFoundException(name);
         }
 
         requirements.remove(requirement.get());
     }
 
-    public void add(Requirement requirement) throws TopicRequirementAlreadyExistsException {
+    public void add(Requirement requirement) throws RequirementAlreadyExistsException {
         Optional<Requirement> foundRequirement = requirements.stream()
-                .filter(x -> x.name() == requirement.name())
+                .filter(x -> x.name().equals(requirement.name()))
                 .findFirst();
 
         if (foundRequirement.isPresent()) {
-            throw new TopicRequirementAlreadyExistsException(requirement);
+            throw new RequirementAlreadyExistsException(requirement);
         }
 
         requirements.add(requirement);
@@ -43,7 +44,7 @@ public class RequirementList {
 
     public Grade getGrade(RequirementName name) {
         double result = requirements.stream()
-                .filter(x -> x.name() == name)
+                .filter(x -> x.name().equals(name))
                 .mapToDouble(x -> x.grade().grade().doubleValue())
                 .sum();
 
@@ -56,5 +57,17 @@ public class RequirementList {
                 .sum();
 
         return Grade.MIN.plus(result);
+    }
+
+    public Set<Requirement> getMissingRequirements(Set<RequirementName> names) {
+        Set<Requirement> missingRequirements = new HashSet<>();
+
+        for (Requirement requirement: requirements) {
+            if (!names.contains(requirement.name())) {
+                missingRequirements.add(requirement);
+            }
+        }
+
+        return missingRequirements;
     }
 }

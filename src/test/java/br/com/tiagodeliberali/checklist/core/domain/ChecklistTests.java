@@ -6,25 +6,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ChecklistTests {
     @Test
-    void create_checklist() {
-        Checklist checklist = Checklist.create("tribe services");
-
-        checklist.add(Topic.create(new TopicName("testability"), 10, Theme.create(5, "stability")));
-
-        assertThat(checklist.countTopics()).isOne();
-        assertThat(checklist.countThemes()).isOne();
-    }
-
-    @Test
-    void create_checklist_with_multiple_topics_returns_correct_amounts() {
+    void create_checklist_with_multiple_topics_returns_correct_amounts() throws RequirementAlreadyExistsException {
         Checklist checklist = buildChecklist();
 
-        assertThat(checklist.countTopics()).isEqualTo(3);
         assertThat(checklist.countThemes()).isEqualTo(2);
+        assertThat(checklist.countTopics()).isEqualTo(3);
     }
 
     @Test
-    void calculate_grade_should_require_service_with_answers() {
+    void calculate_grade_should_require_service_with_answers() throws RequirementAlreadyExistsException {
         Checklist checklist = buildChecklist();
 
         Grade grade = checklist.calculate(ServiceInfo.create("crm-pwa"));
@@ -33,11 +23,13 @@ class ChecklistTests {
     }
 
     @Test
-    void calculate_grade_without_missing_requirements_gets_max_grade() {
+    void calculate_grade_without_missing_requirements_gets_max_grade() throws RequirementAlreadyExistsException {
         Checklist checklist = buildChecklist();
+        
         ServiceInfo service = ServiceInfo.create("crm-pwa");
-
-        checklist.getTopicIterator().forEachRemaining(x -> service.addTopic(x.getName()));
+        service.addTopic(new TopicName("testability"));
+        service.addTopic(new TopicName("database migration"));
+        service.addTopic(new TopicName("kibana log"));
 
         Grade grade = checklist.calculate(service);
 
@@ -45,33 +37,14 @@ class ChecklistTests {
     }
 
     @Test
-    void calculate_partially_answered_service_info() throws TopicRequirementAlreadyExistsException {
+    void calculate_partially_answered_service_info() throws RequirementAlreadyExistsException {
         // arrange
-        Checklist checklist = Checklist.create("tribe services");
-
-        Topic topic1 = Topic.create(new TopicName("testability"), 10, Theme.create(5, "stability"));
-        topic1.addRequirement(Grade.from(0.25), new RequirementName("should have manual tests description"));
-        topic1.addRequirement(Grade.from(0.5), new RequirementName("should have unit tests"));
-        checklist.add(topic1);
-
-        Topic topic2 = Topic.create(new TopicName("database migration"), 6, Theme.create(5, "stability"));
-        topic2.addRequirement(Grade.from(0.4), new RequirementName("should have migration"));
-        checklist.add(topic2);
-
-        Topic topic3 = Topic.create(new TopicName("kibana log"), 10, Theme.create(3, "monitoring"));
-        topic3.addRequirement(Grade.from(0.7), new RequirementName("should not break one log by line"));
-        topic3.addRequirement(Grade.from(0.5), new RequirementName("should have relevant id data"));
-        topic3.addRequirement(Grade.from(0.3), new RequirementName("should have trace id"));
-        checklist.add(topic3);
+        Checklist checklist = buildChecklist();
 
         ServiceInfo service = ServiceInfo.create("crm-pwa");
-
-        // add topics 1 and 3
-        checklist.getTopicIterator().forEachRemaining(topic -> {
-                    if (!topic.getName().id().equals("database migration"))
-                        service.addTopic(topic.getName());
-        });
-
+        service.addRequirement(new TopicName("testability"), new RequirementName("should have manual tests description"));
+        service.addRequirement(new TopicName("kibana log"), new RequirementName("should have relevant id data"));
+        service.addRequirement(new TopicName("kibana log"), new RequirementName("should have trace id"));
 
         // act
         Grade grade = checklist.calculate(service);
@@ -80,12 +53,28 @@ class ChecklistTests {
         assertThat(grade).isEqualTo(Grade.MAX);
     }
 
-    private Checklist buildChecklist() {
+    private Checklist buildChecklist() throws RequirementAlreadyExistsException {
         Checklist checklist = Checklist.create("tribe services");
 
-        checklist.add(Topic.create(new TopicName("testability"), 10, Theme.create(5, "stability")));
-        checklist.add(Topic.create(new TopicName("health check"), 5, Theme.create(5, "stability")));
-        checklist.add(Topic.create(new TopicName("prometheus"), 3, Theme.create(4, "monitoring")));
+        Theme theme1 = Theme.create(new ThemeName("scalability"), 5);
+        Topic topic1 = Topic.create(new TopicName("testability"), 10);
+        topic1.addRequirement(Grade.from(0.25), new RequirementName("should have manual tests description"));
+        topic1.addRequirement(Grade.from(0.5), new RequirementName("should have unit tests"));
+        theme1.add(topic1);
+
+        Topic topic2 = Topic.create(new TopicName("database migration"), 6);
+        topic2.addRequirement(Grade.from(0.4), new RequirementName("should have migration"));
+        theme1.add(topic2);
+        checklist.add(theme1);
+
+        Theme theme2 = Theme.create(new ThemeName("monitoring"), 5);
+        Topic topic3 = Topic.create(new TopicName("kibana log"), 10);
+        topic3.addRequirement(Grade.from(0.7), new RequirementName("should not break one log by line"));
+        topic3.addRequirement(Grade.from(0.5), new RequirementName("should have relevant id data"));
+        topic3.addRequirement(Grade.from(0.3), new RequirementName("should have trace id"));
+        theme2.add(topic3);
+        checklist.add(theme2);
+
         return checklist;
     }
 }

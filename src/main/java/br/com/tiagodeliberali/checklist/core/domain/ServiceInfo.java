@@ -21,6 +21,12 @@ public class ServiceInfo {
         }
     }
 
+    public void addRequirement(TopicName topicName, RequirementName requirementName) {
+        addTopic(topicName);
+
+        answers.get(topicName).addMissingRequirement(requirementName);
+    }
+
     public int count() {
         return answers.size();
     }

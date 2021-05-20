@@ -35,7 +35,7 @@ public class Checklist {
         distinctThemes().forEach(theme -> grades.put(theme, new ArrayList<>()));
 
         topics.stream().forEach(topic -> {
-            Grade result = service.getAnswer(topic.getId())
+            Grade result = service.getAnswer(topic.getName())
                     .map(answer -> topic.getGrade(answer))
                     .orElse(Grade.MIN);
 

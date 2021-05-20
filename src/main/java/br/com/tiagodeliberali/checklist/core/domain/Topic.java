@@ -3,29 +3,28 @@ package br.com.tiagodeliberali.checklist.core.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.UUID;
 
 @AllArgsConstructor
 public class Topic {
     @Getter
-    private final TopicId id;
+    private final TopicName name;
 
     @Getter
     private final Theme theme;
 
-    private final String description;
+    @Getter
     private final int weigth;
+
     private final RequirementList requirements;
 
-    public static Topic create(String description, int weight, Theme theme, List<Requirement> requirements) {
-        return new Topic(
-                new TopicId(UUID.randomUUID()), theme, description, weight, RequirementList.from(new ArrayList<>(requirements)));
+    public static Topic create(TopicName name, int weight, Theme theme, List<Requirement> requirements) {
+        return new Topic(name, theme, weight, RequirementList.from(new HashSet<>(requirements)));
     }
 
-    public static Topic create(String description, int weight, Theme theme) {
-        return new Topic(new TopicId(UUID.randomUUID()), theme, description, weight, RequirementList.from(new ArrayList<>()));
+    public static Topic create(TopicName name, int weight, Theme theme) {
+        return new Topic(name, theme, weight, RequirementList.from(new HashSet<>()));
     }
 
     public Grade getMaxLoss() {
@@ -36,20 +35,19 @@ public class Topic {
         return requirements.count();
     }
 
-    public void addRequirement(Grade grade, String description) throws TopicRequirementAlreadyExistsException {
-        requirements.add(Requirement.create(grade, description));
+    public void addRequirement(Grade grade, RequirementName name) throws TopicRequirementAlreadyExistsException {
+        requirements.add(Requirement.create(grade, name));
     }
 
-    public void removeRequirement(RequirementId id) throws TopicRequirementNotFoundException {
+    public void removeRequirement(RequirementName id) throws TopicRequirementNotFoundException {
         requirements.remove(id);
     }
 
     public Grade getGrade(Answer answer) {
         Grade grade = Grade.MAX;
 
-        answer.requirementsIterator().forEachRemaining(id -> {
-            grade.minus(requirements.getGrade(id).grade().doubleValue());
-        });
+        answer.requirementsIterator().forEachRemaining(id ->
+                grade.minus(requirements.getGrade(id).grade().doubleValue()));
 
         return grade;
     }

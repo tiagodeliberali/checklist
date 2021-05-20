@@ -8,22 +8,22 @@ import java.util.List;
 
 @AllArgsConstructor
 public class Answer {
-    private final TopicId topicId;
-     private final List<RequirementId> missedRequirements;
+    private final TopicName topicName;
+     private final List<RequirementName> missedRequirements;
 
-    public static Answer create(TopicId topicId) {
-        return new Answer(topicId, new ArrayList<>());
+    public static Answer create(TopicName topicName) {
+        return new Answer(topicName, new ArrayList<>());
     }
 
-    public void addMissingRequirement(RequirementId requirementId) {
-        missedRequirements.add(requirementId);
+    public void addMissingRequirement(RequirementName requirementName) {
+        missedRequirements.add(requirementName);
     }
 
-    public void removeMissingRequirement(RequirementId requirementId) {
-        missedRequirements.remove(requirementId);
+    public void removeMissingRequirement(RequirementName requirementName) {
+        missedRequirements.remove(requirementName);
     }
 
-    public Iterator<RequirementId> requirementsIterator() {
+    public Iterator<RequirementName> requirementsIterator() {
         return missedRequirements.iterator();
     }
 }

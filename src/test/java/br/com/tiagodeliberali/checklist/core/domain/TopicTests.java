@@ -10,14 +10,14 @@ class TopicTests {
     @Test
     void create_topic_with_requirements() {
         Topic topic = Topic.create(
-                "testability",
+                new TopicName("testability"),
                 10,
                 Theme.create(6, "stability"),
                 Arrays.asList(
-                    Requirement.create(Grade.from(0.25), "description one"),
-                    Requirement.create(Grade.from(0.25), "another description"),
-                    Requirement.create(Grade.from(0.25), "a third description value"),
-                    Requirement.create(Grade.from(0.25), "last issue to be named")
+                    Requirement.create(Grade.from(0.25), new RequirementName("description one")),
+                    Requirement.create(Grade.from(0.25), new RequirementName("another description")),
+                    Requirement.create(Grade.from(0.25), new RequirementName("a third description value")),
+                    Requirement.create(Grade.from(0.25), new RequirementName("last issue to be named"))
                 )
         );
 
@@ -27,9 +27,9 @@ class TopicTests {
 
     @Test
     void add_requirement_to_topic() throws TopicRequirementAlreadyExistsException {
-        Topic topic = Topic.create("testability", 5, Theme.create(6, "stability"));
+        Topic topic = Topic.create(new TopicName("testability"), 5, Theme.create(6, "stability"));
 
-        topic.addRequirement(Grade.from(0.25), "description one");
+        topic.addRequirement(Grade.from(0.25), new RequirementName("description one"));
 
         assertThat(topic.getMaxLoss()).isEqualTo(Grade.from(0.25));
         assertThat(topic.getRequirementsCount()).isEqualTo(1);
@@ -38,12 +38,12 @@ class TopicTests {
     @Test
     void max_loss_is_one() {
         Topic topic = Topic.create(
-                "testability",
+                new TopicName("testability"),
                 10,
                 Theme.create(6, "stability"),
                 Arrays.asList(
-                        Requirement.create(Grade.from(0.75), "description one"),
-                        Requirement.create(Grade.from(0.75), "another description")
+                        Requirement.create(Grade.from(0.75), new RequirementName("description one")),
+                        Requirement.create(Grade.from(0.75), new RequirementName("another description"))
                 )
         );
 
@@ -52,18 +52,18 @@ class TopicTests {
 
     @Test
     void remove_requirement_from_topic() throws TopicRequirementNotFoundException {
-        Requirement requirement = Requirement.create(Grade.from(0.5), "description one");
+        Requirement requirement = Requirement.create(Grade.from(0.5), new RequirementName("description one"));
         Topic topic = Topic.create(
-                "testability",
+                new TopicName("testability"),
                 10,
                 Theme.create(6, "stability"),
                 Arrays.asList(
                         requirement,
-                        Requirement.create(Grade.from(0.4), "another description")
+                        Requirement.create(Grade.from(0.4), new RequirementName("another description"))
                 )
         );
 
-        topic.removeRequirement(requirement.getId());
+        topic.removeRequirement(requirement.getName());
 
         assertThat(topic.getMaxLoss()).isEqualTo(Grade.from(0.4));
         assertThat(topic.getRequirementsCount()).isEqualTo(1);

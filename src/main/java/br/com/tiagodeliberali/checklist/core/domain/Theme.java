@@ -1,8 +1,8 @@
 package br.com.tiagodeliberali.checklist.core.domain;
 
-public record Theme(int weight, String description) {
-    public static Theme create(int weight, String description) {
-        return new Theme(weight, description);
+public record Theme(int weight, String name) {
+    public static Theme create(int weight, String name) {
+        return new Theme(weight, name);
     }
 
     public Theme {
@@ -10,7 +10,7 @@ public record Theme(int weight, String description) {
             throw new IllegalArgumentException("Weight must be a positive number");
         }
 
-        if (description == null || description.isBlank()) {
+        if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Description must be a filled string");
         }
     }

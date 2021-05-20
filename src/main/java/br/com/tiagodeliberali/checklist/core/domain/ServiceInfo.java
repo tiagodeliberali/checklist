@@ -9,15 +9,15 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ServiceInfo {
     private final String repo;
-    private final Map<TopicId, Answer> answers;
+    private final Map<TopicName, Answer> answers;
 
     public static ServiceInfo create(String repo) {
         return new ServiceInfo(repo, new HashMap<>());
     }
 
-    public void addTopic(TopicId topicId) {
-        if (!answers.containsKey(topicId)) {
-            answers.put(topicId, Answer.create(topicId));
+    public void addTopic(TopicName topicName) {
+        if (!answers.containsKey(topicName)) {
+            answers.put(topicName, Answer.create(topicName));
         }
     }
 
@@ -25,7 +25,7 @@ public class ServiceInfo {
         return answers.size();
     }
 
-    public Optional<Answer> getAnswer(TopicId id) {
+    public Optional<Answer> getAnswer(TopicName id) {
         return Optional.ofNullable(answers.get(id));
     }
 }

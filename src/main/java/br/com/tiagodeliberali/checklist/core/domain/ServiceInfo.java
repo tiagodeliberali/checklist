@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @AllArgsConstructor
 public class ServiceInfo {
@@ -22,5 +23,9 @@ public class ServiceInfo {
 
     public int count() {
         return answers.size();
+    }
+
+    public Optional<Answer> getAnswer(TopicId id) {
+        return Optional.ofNullable(answers.get(id));
     }
 }

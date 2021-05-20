@@ -2,24 +2,28 @@ package br.com.tiagodeliberali.checklist.core.domain;
 
 import lombok.AllArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 @AllArgsConstructor
 public class Answer {
     private final TopicId topicId;
-     private final RequirementList missedRequirements;
+     private final List<RequirementId> missedRequirements;
 
     public static Answer create(TopicId topicId) {
-        return new Answer(topicId, RequirementList.empty());
+        return new Answer(topicId, new ArrayList<>());
     }
 
-    public Grade getScore() {
-        return Grade.MAX.minus(missedRequirements.getGrade().grade().doubleValue());
+    public void addMissingRequirement(RequirementId requirementId) {
+        missedRequirements.add(requirementId);
     }
 
-    public void addMissingRequirement(Requirement missingRequirement) throws TopicRequirementAlreadyExistsException {
-        missedRequirements.add(missingRequirement);
+    public void removeMissingRequirement(RequirementId requirementId) {
+        missedRequirements.remove(requirementId);
     }
 
-    public void removeMissingRequirement(Requirement missingRequirement) throws TopicRequirementNotFoundException {
-        missedRequirements.remove(missingRequirement);
+    public Iterator<RequirementId> requirementsIterator() {
+        return missedRequirements.iterator();
     }
 }

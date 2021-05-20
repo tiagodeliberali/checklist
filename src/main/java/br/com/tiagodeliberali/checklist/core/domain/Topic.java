@@ -9,6 +9,7 @@ import java.util.UUID;
 
 @AllArgsConstructor
 public class Topic {
+    @Getter
     private final TopicId id;
 
     @Getter
@@ -39,7 +40,17 @@ public class Topic {
         requirements.add(Requirement.create(grade, description));
     }
 
-    public void removeRequirement(Grade grade, String description) throws TopicRequirementNotFoundException {
-        requirements.remove(Requirement.create(grade, description));
+    public void removeRequirement(RequirementId id) throws TopicRequirementNotFoundException {
+        requirements.remove(id);
+    }
+
+    public Grade getGrade(Answer answer) {
+        Grade grade = Grade.MAX;
+
+        answer.requirementsIterator().forEachRemaining(id -> {
+            grade.minus(requirements.getGrade(id).grade().doubleValue());
+        });
+
+        return grade;
     }
 }

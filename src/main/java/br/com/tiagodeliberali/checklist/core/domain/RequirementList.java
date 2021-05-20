@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 public class RequirementList {
@@ -17,12 +18,13 @@ public class RequirementList {
         return new RequirementList(new ArrayList<>());
     }
 
-    public void remove(Requirement requirement) throws TopicRequirementNotFoundException {
-        if (!requirements.contains(requirement)) {
-            throw new TopicRequirementNotFoundException(requirement);
+    public void remove(RequirementId id) throws TopicRequirementNotFoundException {
+        Optional<Requirement> requirement = requirements.stream().filter(x -> x.getId() == id).findFirst();
+        if (requirement.isEmpty()) {
+            throw new TopicRequirementNotFoundException(id);
         }
 
-        requirements.remove(requirement);
+        requirements.remove(requirement.get());
     }
 
     public void add(Requirement requirement) throws TopicRequirementAlreadyExistsException {
@@ -37,9 +39,18 @@ public class RequirementList {
         return requirements.size();
     }
 
+    public Grade getGrade(RequirementId id) {
+        double result = requirements.stream()
+                .filter(x -> x.getId() == id)
+                .mapToDouble(x -> x.getGrade().grade().doubleValue())
+                .sum();
+
+        return Grade.MIN.plus(result);
+    }
+
     public Grade getGrade() {
         double result = requirements.stream()
-                .mapToDouble(x -> x.grade().grade().doubleValue())
+                .mapToDouble(x -> x.getGrade().grade().doubleValue())
                 .sum();
 
         return Grade.MIN.plus(result);

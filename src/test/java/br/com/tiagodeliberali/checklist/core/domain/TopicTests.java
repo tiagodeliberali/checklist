@@ -52,19 +52,20 @@ class TopicTests {
 
     @Test
     void remove_requirement_from_topic() throws TopicRequirementNotFoundException {
+        Requirement requirement = Requirement.create(Grade.from(0.5), "description one");
         Topic topic = Topic.create(
                 "testability",
                 10,
                 Theme.create(6, "stability"),
                 Arrays.asList(
-                        Requirement.create(Grade.from(0.5), "description one"),
+                        requirement,
                         Requirement.create(Grade.from(0.4), "another description")
                 )
         );
 
-        topic.removeRequirement(Grade.from(0.4), "another description");
+        topic.removeRequirement(requirement.getId());
 
-        assertThat(topic.getMaxLoss()).isEqualTo(Grade.from(0.5));
+        assertThat(topic.getMaxLoss()).isEqualTo(Grade.from(0.4));
         assertThat(topic.getRequirementsCount()).isEqualTo(1);
     }
 }

@@ -63,7 +63,7 @@ class TopicTests {
                 )
         );
 
-        topic.removeRequirement(requirement.getName());
+        topic.removeRequirement(requirement.name());
 
         assertThat(topic.getMaxLoss()).isEqualTo(Grade.from(0.4));
         assertThat(topic.getRequirementsCount()).isEqualTo(1);

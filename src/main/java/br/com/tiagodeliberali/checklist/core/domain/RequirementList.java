@@ -13,13 +13,13 @@ public class RequirementList {
         return new RequirementList(list);
     }
 
-    public void remove(RequirementName description) throws TopicRequirementNotFoundException {
+    public void remove(RequirementName name) throws TopicRequirementNotFoundException {
         Optional<Requirement> requirement = requirements.stream()
-                .filter(x -> x.getName() == description)
+                .filter(x -> x.name() == name)
                 .findFirst();
 
         if (requirement.isEmpty()) {
-            throw new TopicRequirementNotFoundException(description);
+            throw new TopicRequirementNotFoundException(name);
         }
 
         requirements.remove(requirement.get());
@@ -27,7 +27,7 @@ public class RequirementList {
 
     public void add(Requirement requirement) throws TopicRequirementAlreadyExistsException {
         Optional<Requirement> foundRequirement = requirements.stream()
-                .filter(x -> x.getName() == requirement.getName())
+                .filter(x -> x.name() == requirement.name())
                 .findFirst();
 
         if (foundRequirement.isPresent()) {
@@ -41,10 +41,10 @@ public class RequirementList {
         return requirements.size();
     }
 
-    public Grade getGrade(RequirementName description) {
+    public Grade getGrade(RequirementName name) {
         double result = requirements.stream()
-                .filter(x -> x.getName() == description)
-                .mapToDouble(x -> x.getGrade().grade().doubleValue())
+                .filter(x -> x.name() == name)
+                .mapToDouble(x -> x.grade().grade().doubleValue())
                 .sum();
 
         return Grade.MIN.plus(result);
@@ -52,7 +52,7 @@ public class RequirementList {
 
     public Grade getGrade() {
         double result = requirements.stream()
-                .mapToDouble(x -> x.getGrade().grade().doubleValue())
+                .mapToDouble(x -> x.grade().grade().doubleValue())
                 .sum();
 
         return Grade.MIN.plus(result);

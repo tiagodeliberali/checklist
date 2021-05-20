@@ -27,6 +27,14 @@ public class Checklist {
     }
 
     public Grade calculate(ServiceInfo service) {
-        return Grade.MIN;
+        double total = 0;
+        int count = 0;
+
+        for (Theme theme: themes) {
+            total += theme.calculate(service).grade().doubleValue() * theme.getWeight();
+            count += theme.getWeight();
+        }
+
+        return Grade.from(total / count);
     }
 }

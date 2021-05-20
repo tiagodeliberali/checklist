@@ -50,7 +50,7 @@ class ChecklistTests {
         Grade grade = checklist.calculate(service);
 
         // assert
-        assertThat(grade).isEqualTo(Grade.MAX);
+        assertThat(grade).isEqualTo(Grade.from(0.36796875));
     }
 
     private Checklist buildChecklist() throws RequirementAlreadyExistsException {
@@ -67,7 +67,7 @@ class ChecklistTests {
         theme1.add(topic2);
         checklist.add(theme1);
 
-        Theme theme2 = Theme.create(new ThemeName("monitoring"), 5);
+        Theme theme2 = Theme.create(new ThemeName("monitoring"), 3);
         Topic topic3 = Topic.create(new TopicName("kibana log"), 10);
         topic3.addRequirement(Grade.from(0.7), new RequirementName("should not break one log by line"));
         topic3.addRequirement(Grade.from(0.5), new RequirementName("should have relevant id data"));

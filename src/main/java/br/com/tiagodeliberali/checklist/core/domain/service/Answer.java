@@ -1,5 +1,7 @@
-package br.com.tiagodeliberali.checklist.core.domain;
+package br.com.tiagodeliberali.checklist.core.domain.service;
 
+import br.com.tiagodeliberali.checklist.core.domain.checklist.RequirementName;
+import br.com.tiagodeliberali.checklist.core.domain.checklist.TopicName;
 import lombok.AllArgsConstructor;
 
 import java.util.ArrayList;

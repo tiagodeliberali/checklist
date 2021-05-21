@@ -1,4 +1,4 @@
-package br.com.tiagodeliberali.checklist.core.domain;
+package br.com.tiagodeliberali.checklist.core.domain.checklist;
 
 public record TopicName(String id) {
     public TopicName {

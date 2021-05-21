@@ -1,12 +1,12 @@
-package br.com.tiagodeliberali.checklist.core.domain;
+package br.com.tiagodeliberali.checklist.core.domain.checklist;
 
+import br.com.tiagodeliberali.checklist.core.domain.Grade;
+import br.com.tiagodeliberali.checklist.core.domain.service.ServiceInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 

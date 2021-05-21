@@ -1,8 +1,11 @@
-package br.com.tiagodeliberali.checklist.core.domain;
+package br.com.tiagodeliberali.checklist.core.domain.checklist;
 
+import br.com.tiagodeliberali.checklist.core.domain.Grade;
+import br.com.tiagodeliberali.checklist.core.domain.service.ServiceInfo;
 import lombok.AllArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @AllArgsConstructor
@@ -36,5 +39,9 @@ public class Checklist {
         }
 
         return Grade.from(total / count);
+    }
+
+    public Iterator<Theme> getThemeIterator() {
+        return themes.iterator();
     }
 }

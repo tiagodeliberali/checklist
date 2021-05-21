@@ -1,5 +1,7 @@
-package br.com.tiagodeliberali.checklist.core.domain;
+package br.com.tiagodeliberali.checklist.core.domain.checklist;
 
+import br.com.tiagodeliberali.checklist.core.domain.Grade;
+import br.com.tiagodeliberali.checklist.core.domain.service.ServiceInfo;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

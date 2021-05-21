@@ -1,4 +1,4 @@
-package br.com.tiagodeliberali.checklist.core.domain;
+package br.com.tiagodeliberali.checklist.core.domain.checklist;
 
 public class RequirementNotFoundException extends Exception {
     public RequirementNotFoundException(RequirementName id) {

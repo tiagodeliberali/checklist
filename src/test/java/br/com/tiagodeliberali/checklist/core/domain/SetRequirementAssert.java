@@ -1,5 +1,7 @@
 package br.com.tiagodeliberali.checklist.core.domain;
 
+import br.com.tiagodeliberali.checklist.core.domain.checklist.Requirement;
+import br.com.tiagodeliberali.checklist.core.domain.checklist.RequirementName;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 

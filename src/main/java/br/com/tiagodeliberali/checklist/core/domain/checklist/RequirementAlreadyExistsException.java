@@ -1,4 +1,4 @@
-package br.com.tiagodeliberali.checklist.core.domain;
+package br.com.tiagodeliberali.checklist.core.domain.checklist;
 
 public class RequirementAlreadyExistsException extends Exception {
     public RequirementAlreadyExistsException(Requirement requirement) {

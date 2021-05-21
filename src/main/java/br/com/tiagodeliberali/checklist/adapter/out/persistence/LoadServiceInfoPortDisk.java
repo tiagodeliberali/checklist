@@ -1,6 +1,6 @@
 package br.com.tiagodeliberali.checklist.adapter.out.persistence;
 
-import br.com.tiagodeliberali.checklist.core.application.port.out.JsonFileNotFound;
+import br.com.tiagodeliberali.checklist.core.application.port.out.FailedToLoadException;
 import br.com.tiagodeliberali.checklist.core.application.port.out.LoadServiceInfoPort;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.RequirementName;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.TopicName;
@@ -25,7 +25,7 @@ public class LoadServiceInfoPortDisk implements LoadServiceInfoPort {
     }
 
     @Override
-    public ServiceInfo load(String name) throws JsonFileNotFound {
+    public ServiceInfo load(String name) throws FailedToLoadException {
         Path path = Paths.get(folderPath, String.format("%s.json", name));
         try {
             String jsonStr = Files.readString(path);
@@ -37,16 +37,13 @@ public class LoadServiceInfoPortDisk implements LoadServiceInfoPort {
 
             json.getAnswers().forEach(answerJson -> answerJson
                     .getMissedRequirements()
-                    .forEach(r -> serviceInfo
-                            .addRequirement(new TopicName(answerJson.getTopicName()), new RequirementName(r))));
+                    .forEach(requirement -> serviceInfo
+                            .addRequirement(new TopicName(answerJson.getTopicName()), new RequirementName(requirement))));
 
             return serviceInfo;
         }
-        catch (IOException ex) {
-            throw new JsonFileNotFound(path.toString(), ex);
-        }
         catch (Exception ex) {
-            throw new JsonFileNotFound(path.toString(), ex);
+            throw new FailedToLoadException(path.toString(), ex);
         }
     }
 }

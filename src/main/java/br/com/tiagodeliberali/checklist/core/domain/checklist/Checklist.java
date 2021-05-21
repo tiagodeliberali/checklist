@@ -3,6 +3,7 @@ package br.com.tiagodeliberali.checklist.core.domain.checklist;
 import br.com.tiagodeliberali.checklist.core.domain.Grade;
 import br.com.tiagodeliberali.checklist.core.domain.service.ServiceInfo;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @AllArgsConstructor
 public class Checklist {
+    @Getter
     private final String name;
     private final List<Theme> themes;
 

@@ -1,7 +1,7 @@
 package br.com.tiagodeliberali.checklist.adapter.in.web;
 
 import br.com.tiagodeliberali.checklist.core.application.port.in.CalculateGradesUseCase;
-import br.com.tiagodeliberali.checklist.core.application.port.out.JsonFileNotFound;
+import br.com.tiagodeliberali.checklist.core.application.port.out.FailedToLoadException;
 import br.com.tiagodeliberali.checklist.core.domain.service.ServiceGrade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +16,8 @@ public class GradeController {
         this.calculateGradesUseCase = calculateGradesUseCase;
     }
 
-    @GetMapping(path = "/grade/{service}")
-    public ServiceGrade getServiceGrade(String service) throws JsonFileNotFound {
-        return calculateGradesUseCase.calculate(service);
+    @GetMapping(path = "/grade/{checklist}/{service}")
+    public ServiceGrade getServiceGrade(String checklist, String service) throws FailedToLoadException {
+        return calculateGradesUseCase.calculate(checklist, service);
     }
 }

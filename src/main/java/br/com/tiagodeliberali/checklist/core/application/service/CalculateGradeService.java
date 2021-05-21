@@ -1,7 +1,7 @@
 package br.com.tiagodeliberali.checklist.core.application.service;
 
 import br.com.tiagodeliberali.checklist.core.application.port.in.CalculateGradesUseCase;
-import br.com.tiagodeliberali.checklist.core.application.port.out.JsonFileNotFound;
+import br.com.tiagodeliberali.checklist.core.application.port.out.FailedToLoadException;
 import br.com.tiagodeliberali.checklist.core.application.port.out.LoadChecklistPort;
 import br.com.tiagodeliberali.checklist.core.application.port.out.LoadServiceInfoPort;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.Checklist;
@@ -22,8 +22,8 @@ public class CalculateGradeService implements CalculateGradesUseCase {
     }
 
     @Override
-    public ServiceGrade calculate(String serviceName) throws JsonFileNotFound {
-        Checklist checklist = loadChecklistPort.load();
+    public ServiceGrade calculate(String checklistName, String serviceName) throws FailedToLoadException {
+        Checklist checklist = loadChecklistPort.load(checklistName);
         ServiceInfo service = loadServiceInfoPort.load(serviceName);
 
         return ServiceGrade.build(checklist, service);

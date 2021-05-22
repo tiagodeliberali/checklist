@@ -18,8 +18,15 @@ configurations {
 	}
 }
 
+dependencyManagement {
+	imports {
+		mavenBom 'com.vaadin:vaadin-bom:19.0.8'
+	}
+}
+
+
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'com.vaadin:vaadin-spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

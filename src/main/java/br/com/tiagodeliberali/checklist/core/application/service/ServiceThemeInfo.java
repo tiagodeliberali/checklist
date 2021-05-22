@@ -4,16 +4,23 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
 public class ServiceThemeInfo implements Serializable {
+    private String name;
     private double grade;
-    private Map<String, ServiceTopicInfo> topicsInfo;
+    private int weight;
+    private List<ServiceTopicInfo> topicsInfo;
 
     public ServiceThemeInfo() {
-        topicsInfo = new HashMap<>();
+        topicsInfo = new ArrayList<>();
+    }
+
+    public Optional<ServiceTopicInfo> getTopic(String name) {
+        return topicsInfo.stream().filter(x -> x.getName().equals(name)).findFirst();
     }
 }

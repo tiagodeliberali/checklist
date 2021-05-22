@@ -4,18 +4,20 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 public class ServiceTopicInfo implements Serializable {
+    private String name;
     private double grade;
-    private Map<String, Double> missedRequirements;
-    private Map<String, Double> unusedRequirements;
+    private int weight;
+    private List<ServiceRequirementInfo> missedRequirements;
+    private List<ServiceRequirementInfo> unusedRequirements;
 
     public ServiceTopicInfo() {
-        missedRequirements = new HashMap<>();
-        unusedRequirements = new HashMap<>();
+        missedRequirements = new ArrayList<>();
+        unusedRequirements = new ArrayList<>();
     }
 }

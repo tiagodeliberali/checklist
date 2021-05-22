@@ -3,6 +3,8 @@ package br.com.tiagodeliberali.checklist.adapter.in.web;
 import br.com.tiagodeliberali.checklist.core.application.port.out.FailedToLoadException;
 import br.com.tiagodeliberali.checklist.core.application.service.CalculateGradeService;
 import br.com.tiagodeliberali.checklist.core.application.service.ServiceGrade;
+import br.com.tiagodeliberali.checklist.core.application.service.ServiceThemeInfo;
+import br.com.tiagodeliberali.checklist.core.application.service.ServiceTopicInfo;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
@@ -16,6 +18,8 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Comparator;
 
 @Route
 public class MainView extends VerticalLayout {
@@ -49,31 +53,43 @@ public class MainView extends VerticalLayout {
 
             serviceGradeValue.setText(String.format("Service grade: %.2f", serviceGrade.getGrade()));
 
-            serviceGrade.getThemesInfo().forEach((themeName, themeInfo) -> {
-                VerticalLayout themeLayout = new VerticalLayout();
-                // themeLayout.setWidth(400, Unit.POINTS);
-                themeLayout.add(new H3(String.format("%s: %.2f", themeName, themeInfo.getGrade())));
+            serviceGrade.getThemesInfo().stream()
+                    .sorted(Comparator.comparingInt(x -> -x.getWeight()))
+                    .forEachOrdered(themeInfo -> {
+                        VerticalLayout themeLayout = new VerticalLayout();
+                        themeLayout.add(new H3(String.format("%s: %.2f", themeInfo.getName(), themeInfo.getGrade())));
 
-                themeInfo.getTopicsInfo().forEach((topicName, topicInfo) -> {
-                    themeLayout.add(new H4(String.format("%s: %.2f", topicName, topicInfo.getGrade())));
+                        themeInfo.getTopicsInfo().stream()
+                                .sorted(Comparator.comparingInt(x -> -x.getWeight()))
+                                .forEachOrdered(topicInfo -> {
+                                    themeLayout.add(new H4(String.format("%s: %.2f", topicInfo.getName(), topicInfo.getGrade())));
 
-                    VerticalLayout missedRequirements = new VerticalLayout();
-                    VerticalLayout unusedRequirements = new VerticalLayout();
+                                    VerticalLayout missedRequirements = new VerticalLayout();
+                                    missedRequirements.setWidth(200, Unit.POINTS);
 
-                    themeLayout.add(new HorizontalLayout(
-                            missedRequirements,
-                            unusedRequirements
-                    ));
+                                    VerticalLayout unusedRequirements = new VerticalLayout();
+                                    unusedRequirements.setWidth(200, Unit.POINTS);
 
-                    topicInfo.getMissedRequirements().forEach((req, grade) ->
-                            missedRequirements.add(new Label(String.format("%s (%s)", req, grade))));
+                                    themeLayout.add(new HorizontalLayout(
+                                            missedRequirements,
+                                            unusedRequirements
+                                    ));
 
-                    topicInfo.getUnusedRequirements().forEach((req, grade) ->
-                            unusedRequirements.add(new Label(String.format("%s (%s)", req, grade))));
-                });
+                                    topicInfo.getMissedRequirements().stream()
+                                            .sorted(Comparator.comparingDouble(x -> -x.getGrade()))
+                                            .forEachOrdered(req ->
+                                            missedRequirements.add(
+                                                    new Label(String.format("%s (%s)", req.getName(), req.getGrade()))));
 
-                serviceGradeDetails.add(themeLayout);
-            });
+                                    topicInfo.getUnusedRequirements().stream()
+                                            .sorted(Comparator.comparingDouble(x -> -x.getGrade()))
+                                            .forEachOrdered(req ->
+                                            unusedRequirements.add(
+                                                    new Label(String.format("%s (%s)", req.getName(), req.getGrade()))));
+                                });
+
+                        serviceGradeDetails.add(themeLayout);
+                    });
         } catch (FailedToLoadException e) {
             Notification.show("Error:" + e.getMessage());
         }

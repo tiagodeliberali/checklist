@@ -5,7 +5,6 @@ import br.com.tiagodeliberali.checklist.core.application.port.out.FailedToLoadEx
 import br.com.tiagodeliberali.checklist.core.application.port.out.LoadChecklistPort;
 import br.com.tiagodeliberali.checklist.core.application.port.out.LoadServiceInfoPort;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.Checklist;
-import br.com.tiagodeliberali.checklist.core.domain.service.ServiceGrade;
 import br.com.tiagodeliberali.checklist.core.domain.service.ServiceInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

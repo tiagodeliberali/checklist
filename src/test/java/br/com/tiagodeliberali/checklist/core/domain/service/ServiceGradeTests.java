@@ -1,5 +1,8 @@
 package br.com.tiagodeliberali.checklist.core.domain.service;
 
+import br.com.tiagodeliberali.checklist.core.application.service.ServiceGrade;
+import br.com.tiagodeliberali.checklist.core.application.service.ServiceThemeInfo;
+import br.com.tiagodeliberali.checklist.core.application.service.ServiceTopicInfo;
 import br.com.tiagodeliberali.checklist.core.domain.Grade;
 import br.com.tiagodeliberali.checklist.core.domain.SetRequirementAssert;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.Checklist;
@@ -47,24 +50,24 @@ class ServiceGradeTests {
         ServiceGrade serviceGrade = ServiceGrade.build(checklist, service);
 
         // assert
-        assertThat(serviceGrade.getGrade()).isEqualTo(Grade.from(0.1250));
+        assertThat(serviceGrade.getGrade()).isEqualTo(0.1250);
 
-        ServiceThemeInfo themeInfo1 = serviceGrade.getThemesInfo().get(new ThemeName("scalability"));
-        assertThat(themeInfo1.getGrade()).isEqualTo(Grade.from(0.250));
+        ServiceThemeInfo themeInfo1 = serviceGrade.getThemesInfo().get("scalability");
+        assertThat(themeInfo1.getGrade()).isEqualTo(0.250);
 
-        ServiceTopicInfo topicInfo1 = themeInfo1.getTopicsInfo().get(new TopicName("topic1"));
-        assertThat(topicInfo1.getGrade()).isEqualTo(Grade.from(0.5));
-        SetRequirementAssert.assertThat(topicInfo1.getUnusedRequirements()).contains(new RequirementName("req2"));
+        ServiceTopicInfo topicInfo1 = themeInfo1.getTopicsInfo().get("topic1");
+        assertThat(topicInfo1.getGrade()).isEqualTo(0.5);
+        assertThat(topicInfo1.getUnusedRequirements().keySet()).contains("req2");
 
-        ServiceTopicInfo topicInfo2 = themeInfo1.getTopicsInfo().get(new TopicName("topic2"));
-        assertThat(topicInfo2.getGrade()).isEqualTo(Grade.MIN);
-        SetRequirementAssert.assertThat(topicInfo2.getUnusedRequirements()).contains(new RequirementName("req3"));
+        ServiceTopicInfo topicInfo2 = themeInfo1.getTopicsInfo().get("topic2");
+        assertThat(topicInfo2.getGrade()).isEqualTo(0);
+        assertThat(topicInfo2.getUnusedRequirements().keySet()).contains("req3");
 
-        ServiceThemeInfo themeInfo2 = serviceGrade.getThemesInfo().get(new ThemeName("monitoring"));
-        assertThat(themeInfo2.getGrade()).isEqualTo(Grade.MIN);
+        ServiceThemeInfo themeInfo2 = serviceGrade.getThemesInfo().get("monitoring");
+        assertThat(themeInfo2.getGrade()).isEqualTo(0);
 
-        ServiceTopicInfo topicInfo3 = themeInfo2.getTopicsInfo().get(new TopicName("topic3"));
-        assertThat(topicInfo3.getGrade()).isEqualTo(Grade.MIN);
-        SetRequirementAssert.assertThat(topicInfo3.getUnusedRequirements()).contains(new RequirementName("req4"));
+        ServiceTopicInfo topicInfo3 = themeInfo2.getTopicsInfo().get("topic3");
+        assertThat(topicInfo3.getGrade()).isEqualTo(0);
+        assertThat(topicInfo3.getUnusedRequirements().keySet()).contains("req4");
     }
 }

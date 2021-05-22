@@ -1,0 +1,21 @@
+{
+  "name": "service checklist",
+  "themes": [
+    {
+      "name": "scalability",
+      "weight": 3,
+      "topics": [
+        {
+          "name": "testability",
+          "weight": 3,
+          "requirements": [
+            {
+              "name": "should have unit tests",
+              "grade": 0.25
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

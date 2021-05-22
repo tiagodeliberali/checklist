@@ -1,6 +1,5 @@
-package br.com.tiagodeliberali.checklist.adapter.out.adapter;
+package br.com.tiagodeliberali.checklist.adapter.out.persistence;
 
-import br.com.tiagodeliberali.checklist.adapter.out.persistence.LoadChecklistDisk;
 import br.com.tiagodeliberali.checklist.core.application.port.out.FailedToLoadException;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.Checklist;
 import org.junit.jupiter.api.Test;

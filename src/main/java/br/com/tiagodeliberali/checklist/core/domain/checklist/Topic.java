@@ -66,4 +66,12 @@ public class Topic {
 
         return requirements.getMissingRequirements(names);
     }
+
+    public Set<Requirement> getMissingRequirements(Answer answer) {
+        Set<RequirementName> names = new HashSet<>();
+
+        answer.requirementsIterator().forEachRemaining(name -> names.add(name));
+
+        return requirements.getRequirements(names);
+    }
 }

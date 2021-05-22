@@ -71,4 +71,16 @@ public class RequirementList {
 
         return missingRequirements;
     }
+
+    public Set<Requirement> getRequirements(Set<RequirementName> names) {
+        Set<Requirement> existingRequirements = new HashSet<>();
+
+        for (Requirement requirement: requirements) {
+            if (names.contains(requirement.name())) {
+                existingRequirements.add(requirement);
+            }
+        }
+
+        return existingRequirements;
+    }
 }

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 @Getter
@@ -41,6 +42,14 @@ public class ServiceGrade {
                         .orElse(topic.getUnusedRequirements(Answer.create(topic.getName())))
                         .forEach(requirement -> topicInfo
                                 .getUnusedRequirements().put(
+                                        requirement.name().id(),
+                                        requirement.grade().grade().doubleValue()));
+
+                service.getAnswer(topic.getName())
+                        .map(answer -> topic.getMissingRequirements(answer))
+                        .orElse(new HashSet<>())
+                        .forEach(requirement -> topicInfo
+                                .getMissedRequirements().put(
                                         requirement.name().id(),
                                         requirement.grade().grade().doubleValue()));
 

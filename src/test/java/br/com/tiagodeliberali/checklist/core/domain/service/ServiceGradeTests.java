@@ -57,10 +57,12 @@ class ServiceGradeTests {
 
         ServiceTopicInfo topicInfo1 = themeInfo1.getTopicsInfo().get("topic1");
         assertThat(topicInfo1.getGrade()).isEqualTo(0.5);
+        assertThat(topicInfo1.getMissedRequirements().keySet()).contains("req1");
         assertThat(topicInfo1.getUnusedRequirements().keySet()).contains("req2");
 
         ServiceTopicInfo topicInfo2 = themeInfo1.getTopicsInfo().get("topic2");
         assertThat(topicInfo2.getGrade()).isEqualTo(0);
+        assertThat(topicInfo2.getMissedRequirements().keySet()).isEmpty();
         assertThat(topicInfo2.getUnusedRequirements().keySet()).contains("req3");
 
         ServiceThemeInfo themeInfo2 = serviceGrade.getThemesInfo().get("monitoring");
@@ -68,6 +70,8 @@ class ServiceGradeTests {
 
         ServiceTopicInfo topicInfo3 = themeInfo2.getTopicsInfo().get("topic3");
         assertThat(topicInfo3.getGrade()).isEqualTo(0);
+        assertThat(topicInfo3.getMissedRequirements().keySet()).contains("req5");
+        assertThat(topicInfo3.getMissedRequirements().keySet()).contains("req6");
         assertThat(topicInfo3.getUnusedRequirements().keySet()).contains("req4");
     }
 }

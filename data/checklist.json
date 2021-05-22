@@ -1,17 +1,467 @@
 {
-  "name": "service checklist",
+  "name": "Service checklist",
   "themes": [
     {
-      "name": "scalability",
-      "weight": 3,
+      "name": "Estabilidade",
+      "weight": 5,
       "topics": [
         {
-          "name": "testability",
+          "name": "Testabilidade",
+          "weight": 10,
+          "requirements": [
+            {
+              "name": "falta documentação de testes manuais",
+              "grade": 0.2
+            },
+            {
+              "name": "faltam testes unitários",
+              "grade": 0.3
+            },
+            {
+              "name": "faltam testes de integração",
+              "grade": 0.3
+            },
+            {
+              "name": "falta meta de coverage",
+              "grade": 0.1
+            },
+            {
+              "name": "testes não estão no CI/CD",
+              "grade": 0.8
+            }
+          ]
+        },
+        {
+          "name": "Health check",
+          "weight": 9,
+          "requirements": [
+            {
+              "name": "falta monitorar client de SQS",
+              "grade": 0.2
+            },
+            {
+              "name": "falta monitorar client de Kafka",
+              "grade": 0.2
+            },
+            {
+              "name": "falta monitorar client do Redis",
+              "grade": 0.2
+            },
+            {
+              "name": "falta monitorar client de Postgres",
+              "grade": 0.2
+            },
+            {
+              "name": "falta monitorar client de Mongo",
+              "grade": 0.2
+            },
+            {
+              "name": "falta monitorar client de Cassandra",
+              "grade": 0.2
+            }
+          ]
+        },
+        {
+          "name": "Sonarqube",
+          "weight": 7,
+          "requirements": [
+            {
+              "name": "não tem sonarqube associado ao projeto",
+              "grade": 1
+            },
+            {
+              "name": "issues registrados não são atacados",
+              "grade": 0.8
+            },
+            {
+              "name": "não está dando insumos no PR",
+              "grade": 0.6
+            },
+            {
+              "name": "não bloqueia PR",
+              "grade": 0.2
+            },
+            {
+              "name": "issues apontados são irrelevantes",
+              "grade": 0.4
+            },
+            {
+              "name": "não tem coverage configurado",
+              "grade": 0.2
+            }
+          ]
+        },
+        {
+          "name": "Atualização de libs",
+          "weight": 6,
+          "requirements": [
+            {
+              "name": "código deprecado que precisa ser removido",
+              "grade": 0.3
+            },
+            {
+              "name": "libs com problemas críticos e graves",
+              "grade": 0.8
+            },
+            {
+              "name": "libs com problemas médios e baixos",
+              "grade": 0.3
+            },
+            {
+              "name": "libs fora do padrão do quinto andar",
+              "grade": 0.5
+            },
+            {
+              "name": "libs desatualizadas",
+              "grade": 0.3
+            }
+          ]
+        },
+        {
+          "name": "Encerramento de pods",
+          "weight": 5,
+          "requirements": [
+            {
+              "name": "pod só morre com encerramento pelo kubernetes",
+              "grade": 1
+            },
+            {
+              "name": "não encerra o client de Kafka",
+              "grade": 0.3
+            },
+            {
+              "name": "não encerra o client de SQS",
+              "grade": 0.3
+            },
+            {
+              "name": "não encerra web sockets",
+              "grade": 0.3
+            }
+          ]
+        },
+        {
+          "name": "Auditabilidade de dados",
+          "weight": 5,
+          "requirements": [
+            {
+              "name": "nenhuma informação é auditada",
+              "grade": 1
+            },
+            {
+              "name": "parte das informações não são auditadas",
+              "grade": 0.5
+            }
+          ]
+        },
+        {
+          "name": "Data migration",
+          "weight": 4,
+          "requirements": [
+            {
+              "name": "não existe forma de migration as code",
+              "grade": 1
+            }
+          ]
+        },
+        {
+          "name": "Segurança",
+          "weight": 2,
+          "requirements": [
+            {
+              "name": "usa chaves fixas para autenticação",
+              "grade": 0.5
+            },
+            {
+              "name": "endpoints abertos que deveriam estar fechados",
+              "grade": 1
+            },
+            {
+              "name": "não usa Keycloak",
+              "grade": 0.2
+            },
+            {
+              "name": "falta tem OpenAPI configurado",
+              "grade": 0.2
+            }
+          ]
+        },
+        {
+          "name": "Ambiente de desenvolvimento",
+          "weight": 1,
+          "requirements": [
+            {
+              "name": "ambiente de desenvolvimento é diferente de produção",
+              "grade": 0.8
+            },
+            {
+              "name": "não existe ambiente de desenvolvimento",
+              "grade": 1
+            },
+            {
+              "name": "não conseguimos simular integração com outros sistemas",
+              "grade": 0.5
+            },
+            {
+              "name": "falta estrutura para simular mensagens",
+              "grade": 0.3
+            },
+            {
+              "name": "falta dados de qualidade para testes locais",
+              "grade": 0.7
+            },
+            {
+              "name": "fnão tem documentação de como subir o ambiente local",
+              "grade": 0.7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Monitoramento",
+      "weight": 4,
+      "topics": [
+        {
+          "name": "Alarmes",
+          "weight": 10,
+          "requirements": [
+            {
+              "name": "não possui alarmes para o time",
+              "grade": 0.2
+            },
+            {
+              "name": "alarmes poderiam ser substituidos por melhores health checks",
+              "grade": 0.2
+            },
+            {
+              "name": "não possui alarmes para taxa de 500",
+              "grade": 0.7
+            },
+            {
+              "name": "não possui alarmes para tempo de resposta",
+              "grade": 0.7
+            },
+            {
+              "name": "não possui alarmes para o lag no kafka",
+              "grade": 0.7
+            },
+            {
+              "name": "não possui alarmes para o tempo de SQS",
+              "grade": 0.7
+            },
+            {
+              "name": "não possui alarmes relacionados a web socket",
+              "grade": 0.5
+            }
+          ]
+        },
+        {
+          "name": "Prometheus",
+          "weight": 10,
+          "requirements": [
+            {
+              "name": "nãp tem a lib do prometheus gerando estatísticas do framework",
+              "grade": 1
+            },
+            {
+              "name": "não tem métricas de negócio do serviço",
+              "grade": 0.5
+            },
+            {
+              "name": "não possui dash personalizado documentado",
+              "grade": 0.3
+            }
+          ]
+        },
+        {
+          "name": "Log no kibana",
+          "weight": 8,
+          "requirements": [
+            {
+              "name": "logs estão qubrados por linha",
+              "grade": 1
+            },
+            {
+              "name": "não possui informações para identifica o evento",
+              "grade": 0.8
+            },
+            {
+              "name": "não possui trace Id",
+              "grade": 0.2
+            },
+            {
+              "name": "volume de logs muito grande comparado com volume da aplicação",
+              "grade": 0.3
+            },
+            {
+              "name": "logando dados sensíveis",
+              "grade": 0.7
+            }
+          ]
+        },
+        {
+          "name": "Sentry",
+          "weight": 5,
+          "requirements": [
+            {
+              "name": "repo não está linkado",
+              "grade": 0.2
+            },
+            {
+              "name": "não possui a lib do sentry configurada",
+              "grade": 1
+            },
+            {
+              "name": "não tem um dns por ambiente",
+              "grade": 0.5
+            },
+            {
+              "name": "não tem release associado ao sentry",
+              "grade": 0.5
+            },
+            {
+              "name": "não tem o deploy associado ao sentry",
+              "grade": 0.5
+            },
+            {
+              "name": "não possui tag de app",
+              "grade": 0.2
+            },
+            {
+              "name": "não possui tag de user",
+              "grade": 0.2
+            },
+            {
+              "name": "não possui tag de env",
+              "grade": 0.2
+            },
+            {
+              "name": "não possui tag de classe/módulo",
+              "grade": 0.2
+            },
+            {
+              "name": "não tem ritual para lidar com erros logados",
+              "grade": 0.5
+            },
+            {
+              "name": "os erros não estão agrupados",
+              "grade": 0.5
+            },
+            {
+              "name": "os erros não estão chegando no sentry",
+              "grade": 1
+            },
+            {
+              "name": "possui muitos erros não tratados",
+              "grade": 0.6
+            }
+          ]
+        },
+        {
+          "name": "Tracing distribuído",
+          "weight": 2,
+          "requirements": [
+            {
+              "name": "nao possui uma lib de tracing",
+              "grade": 1
+            },
+            {
+              "name": "não possui span para trechos relevantes do código",
+              "grade": 0.1
+            },
+            {
+              "name": "não inclui trace id nas mensagens enviadas",
+              "grade": 0.4
+            },
+            {
+              "name": "não inclui trace id nas chamadas a API",
+              "grade": 0.4
+            }
+          ]
+        },
+        {
+          "name": "Instana",
+          "weight": 1,
+          "requirements": [
+            {
+              "name": "instana não está habilitado",
+              "grade": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Documentação",
+      "weight": 1,
+      "topics": [
+        {
+          "name": "Descrição resumida no github",
+          "weight": 10,
+          "requirements": [
+            {
+              "name": "não possui",
+              "grade": 1
+            },
+            {
+              "name": "incompleto",
+              "grade": 0.5
+            }
+          ]
+        },
+        {
+          "name": "Diagrama de arquitetura",
+          "weight": 5,
+          "requirements": [
+            {
+              "name": "não possui",
+              "grade": 1
+            },
+            {
+              "name": "incompleto",
+              "grade": 0.5
+            }
+          ]
+        },
+        {
+          "name": "Fluxo básico da aplicação",
+          "weight": 4,
+          "requirements": [
+            {
+              "name": "não possui",
+              "grade": 1
+            },
+            {
+              "name": "incompleto",
+              "grade": 0.5
+            }
+          ]
+        },
+        {
+          "name": "Lista de endpoints",
           "weight": 3,
           "requirements": [
             {
-              "name": "should have unit tests",
-              "grade": 0.25
+              "name": "não possui",
+              "grade": 1
+            },
+            {
+              "name": "incompleto",
+              "grade": 0.5
+            }
+          ]
+        },
+        {
+          "name": "FAQ",
+          "weight": 2,
+          "requirements": [
+            {
+              "name": "não possui",
+              "grade": 1
+            },
+            {
+              "name": "incompleto",
+              "grade": 0.5
             }
           ]
         }

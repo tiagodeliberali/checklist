@@ -47,15 +47,15 @@ public class ServiceGrade {
                 topicInfo.setName(topic.getName().name());
 
                 service.getAnswer(topic.getName())
-                        .map(answer -> topic.getUnusedRequirements(answer))
-                        .orElse(topic.getUnusedRequirements(Answer.create(topic.getName())))
+                        .map(topic::getUnusedRequirements)
+                        .orElse(topic.getUnusedRequirements(Answer.create()))
                         .forEach(requirement -> topicInfo
                                 .getUnusedRequirements().add(new ServiceRequirementInfo(
                                         requirement.getName().name(),
                                         requirement.getGrade().grade().doubleValue())));
 
                 service.getAnswer(topic.getName())
-                        .map(answer -> topic.getRequirements(answer))
+                        .map(topic::getRequirements)
                         .orElse(new HashSet<>())
                         .forEach(requirement -> topicInfo
                                 .getMissedRequirements().add(new ServiceRequirementInfo(

@@ -58,7 +58,7 @@ class TopicTests {
     void get_requirements_not_used() throws EntityAlreadyExistException {
         Topic topic = createTopic();
 
-        Answer answer = Answer.create(new TopicName("testability"));
+        Answer answer = Answer.create();
         answer.addMissingRequirement(EntityId.from(new RequirementName("third description")));
         answer.addMissingRequirement(EntityId.from(new RequirementName("another description")));
 

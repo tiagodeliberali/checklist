@@ -3,7 +3,6 @@ package br.com.tiagodeliberali.checklist.core.domain.checklist;
 import br.com.tiagodeliberali.checklist.core.domain.Grade;
 import br.com.tiagodeliberali.checklist.core.domain.SetRequirementAssert;
 import br.com.tiagodeliberali.checklist.core.domain.service.ServiceInfo;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;

@@ -17,6 +17,7 @@ import br.com.tiagodeliberali.checklist.core.domain.checklist.TopicName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -56,27 +57,32 @@ class ServiceGradeTests {
         // assert
         assertThat(serviceGrade.getGrade()).isEqualTo(0.1250);
 
-        ServiceThemeInfo themeInfo1 = serviceGrade.getTheme("scalability").get();
-        assertThat(themeInfo1.getGrade()).isEqualTo(0.250);
+        Optional<ServiceThemeInfo> themeInfo1 = serviceGrade.getTheme("scalability");
+        assertThat(themeInfo1).isPresent();
+        assertThat(themeInfo1.get().getGrade()).isEqualTo(0.250);
 
-        ServiceTopicInfo topicInfo1 = themeInfo1.getTopic("topic1").get();
-        assertThat(topicInfo1.getGrade()).isEqualTo(0.5);
-        assertThatContainsRequirementName(topicInfo1.getMissedRequirements(), "req1");
-        assertThatContainsRequirementName(topicInfo1.getUnusedRequirements(), "req2");
+        Optional<ServiceTopicInfo> topicInfo1 = themeInfo1.get().getTopic("topic1");
+        assertThat(topicInfo1).isPresent();
+        assertThat(topicInfo1.get().getGrade()).isEqualTo(0.5);
+        assertThatContainsRequirementName(topicInfo1.get().getMissedRequirements(), "req1");
+        assertThatContainsRequirementName(topicInfo1.get().getUnusedRequirements(), "req2");
 
-        ServiceTopicInfo topicInfo2 = themeInfo1.getTopic("topic2").get();
-        assertThat(topicInfo2.getGrade()).isEqualTo(0);
-        assertThat(topicInfo2.getMissedRequirements()).isEmpty();
-        assertThatContainsRequirementName(topicInfo2.getUnusedRequirements(), "req3");
+        Optional<ServiceTopicInfo> topicInfo2 = themeInfo1.get().getTopic("topic2");
+        assertThat(topicInfo2).isPresent();
+        assertThat(topicInfo2.get().getGrade()).isEqualTo(0);
+        assertThat(topicInfo2.get().getMissedRequirements()).isEmpty();
+        assertThatContainsRequirementName(topicInfo2.get().getUnusedRequirements(), "req3");
 
-        ServiceThemeInfo themeInfo2 = serviceGrade.getTheme("monitoring").get();
-        assertThat(themeInfo2.getGrade()).isEqualTo(0);
+        Optional<ServiceThemeInfo> themeInfo2 = serviceGrade.getTheme("monitoring");
+        assertThat(themeInfo2).isPresent();
+        assertThat(themeInfo2.get().getGrade()).isEqualTo(0);
 
-        ServiceTopicInfo topicInfo3 = themeInfo2.getTopic("topic3").get();
-        assertThat(topicInfo3.getGrade()).isEqualTo(0);
-        assertThatContainsRequirementName(topicInfo3.getMissedRequirements(), "req5");
-        assertThatContainsRequirementName(topicInfo3.getMissedRequirements(), "req6");
-        assertThatContainsRequirementName(topicInfo3.getUnusedRequirements(), "req4");
+        Optional<ServiceTopicInfo> topicInfo3 = themeInfo2.get().getTopic("topic3");
+        assertThat(topicInfo3).isPresent();
+        assertThat(topicInfo3.get().getGrade()).isEqualTo(0);
+        assertThatContainsRequirementName(topicInfo3.get().getMissedRequirements(), "req5");
+        assertThatContainsRequirementName(topicInfo3.get().getMissedRequirements(), "req6");
+        assertThatContainsRequirementName(topicInfo3.get().getUnusedRequirements(), "req4");
     }
 
     private void assertThatContainsRequirementName(List<ServiceRequirementInfo> list, String name) {

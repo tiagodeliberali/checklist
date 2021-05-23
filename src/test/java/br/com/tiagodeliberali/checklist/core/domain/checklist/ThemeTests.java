@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ThemeTests {
     @Test
-    void add_requirement() throws RequirementAlreadyExistsException, TopicNotFoundException {
+    void add_requirement() throws RequirementAlreadyExistsException, TopicNotFoundException, ItemAlreadyExistException {
         Theme theme = Theme.create(new ThemeName("scalability"), 10);
 
         theme.add(Topic.create(new TopicName("testability"), 5));
@@ -22,7 +22,7 @@ class ThemeTests {
                 Requirement.create(Grade.from(0.25), new RequirementName("missing manual tests doc")));
 
         assertThat(theme.count()).isOne();
-        assertThat(theme.get(new TopicName("testability")).getRequirementsCount()).isOne();
+        assertThat(theme.getByName(new TopicName("testability")).getRequirementsCount()).isOne();
     }
 
     @Test
@@ -36,7 +36,7 @@ class ThemeTests {
     }
 
     @Test
-    void calculate_grade() {
+    void calculate_grade() throws ItemAlreadyExistException, RequirementAlreadyExistsException {
         Theme theme = createTheme();
 
         ServiceInfo service = ServiceInfo.create("us-tasks");
@@ -50,7 +50,7 @@ class ThemeTests {
     }
 
     @Test
-    void return_unused_requirements() {
+    void return_unused_requirements() throws ItemAlreadyExistException, RequirementAlreadyExistsException {
         Theme theme = createTheme();
 
         ServiceInfo service = ServiceInfo.create("us-tasks");
@@ -65,19 +65,22 @@ class ThemeTests {
         SetRequirementAssert.assertThat(unusedRequirements).contains(new RequirementName("not validating sqs"));
     }
 
-    private Theme createTheme() {
+    private Theme createTheme() throws ItemAlreadyExistException, RequirementAlreadyExistsException {
         Theme theme = Theme.create(new ThemeName("scalability"), 10);
 
-        theme.add(Topic.create(new TopicName("testability"), 5, Arrays.asList(
-                Requirement.create(Grade.from(0.2), new RequirementName("missing manual tests doc")),
-                Requirement.create(Grade.from(0.4), new RequirementName("no unit tests")),
-                Requirement.create(Grade.from(0.8), new RequirementName("not in ci/cd"))
-        )));
+        Topic topic1 = Topic.create(new TopicName("testability"), 5);
+        topic1.addRequirement(Requirement.create(Grade.from(0.2), new RequirementName("missing manual tests doc")));
+        topic1.addRequirement(Requirement.create(Grade.from(0.4), new RequirementName("no unit tests")));
+        topic1.addRequirement(Requirement.create(Grade.from(0.8), new RequirementName("not in ci/cd")));
 
-        theme.add(Topic.create(new TopicName("health check"), 2, Arrays.asList(
-                Requirement.create(Grade.from(0.3), new RequirementName("not validating database")),
-                Requirement.create(Grade.from(0.6), new RequirementName("not validating sqs"))
-        )));
+        theme.add(topic1);
+
+        Topic topic2 = Topic.create(new TopicName("health check"), 2);
+        topic2.addRequirement(Requirement.create(Grade.from(0.3), new RequirementName("not validating database")));
+        topic2.addRequirement(Requirement.create(Grade.from(0.6), new RequirementName("not validating sqs")));
+
+        theme.add(topic2);
+
         return theme;
     }
 }

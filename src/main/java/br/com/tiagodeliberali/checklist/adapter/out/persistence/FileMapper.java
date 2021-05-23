@@ -29,7 +29,11 @@ public class FileMapper {
 
             themeJson.getTopics().forEach(topicJson -> {
                 Topic topic = Topic.create(new TopicName(topicJson.getName()), topicJson.getWeight());
-                theme.add(topic);
+                try {
+                    theme.add(topic);
+                } catch (ItemAlreadyExistException e) {
+                    logger.warn(e.getMessage());
+                }
 
                 topicJson.getRequirements().forEach(requirementJson -> {
                     try {

@@ -1,31 +1,40 @@
 package br.com.tiagodeliberali.checklist.core.domain.checklist;
 
-import br.com.tiagodeliberali.checklist.core.domain.service.Answer;
 import br.com.tiagodeliberali.checklist.core.domain.Grade;
-import lombok.AllArgsConstructor;
+import br.com.tiagodeliberali.checklist.core.domain.service.Answer;
+import br.com.tiagodeliberali.checklist.core.domain.service.ServiceInfo;
 import lombok.Getter;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
-@AllArgsConstructor
-public class Topic {
-    @Getter
+@Getter
+public class Topic implements CalculableEntity, WeightCalculableEntity {
+    private final EntityId id;
     private final TopicName name;
-
-    @Getter
-    private final int weigth;
-
+    private final int weight;
     private final RequirementList requirements;
 
-    public static Topic create(TopicName name, int weight, List<Requirement> requirements) {
-        return new Topic(name, weight, RequirementList.from(new HashSet<>(requirements)));
+    private Topic(TopicName name, int weight) {
+        this.name = name;
+        this.weight = weight;
+        requirements = RequirementList.from(new HashSet<>());
+        id = EntityId.from(name);
     }
 
     public static Topic create(TopicName name, int weight) {
-        return new Topic(name, weight, RequirementList.from(new HashSet<>()));
+        return new Topic(name, weight);
+    }
+
+    @Override
+    public EntityId getId() {
+        return id;
+    }
+
+    @Override
+    public Grade calculate(ServiceInfo service) {
+        return service.getAnswer(name).map(x -> getGrade(x)).orElse(Grade.MIN);
     }
 
     public int getRequirementsCount() {
@@ -44,7 +53,7 @@ public class Topic {
         requirements.remove(id);
     }
 
-    public Grade getGrade(Answer answer) {
+    private Grade getGrade(Answer answer) {
         Grade grade = Grade.MAX;
         Iterator<RequirementName> iterator = answer.requirementsIterator();
 
@@ -74,4 +83,6 @@ public class Topic {
     public Grade getMaxLoss() {
         return requirements.getGrade();
     }
+
+
 }

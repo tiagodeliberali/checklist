@@ -10,7 +10,7 @@ import java.util.Map;
 public class NodeInfo<ITEM extends CalculableEntity> {
     protected Map<EntityId, ITEM> nodes = new HashMap<>();
 
-    public long count() {
+    public int count() {
         return nodes.size();
     }
 

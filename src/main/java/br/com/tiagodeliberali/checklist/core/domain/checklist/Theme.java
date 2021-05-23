@@ -4,13 +4,12 @@ import br.com.tiagodeliberali.checklist.core.domain.Grade;
 import br.com.tiagodeliberali.checklist.core.domain.service.ServiceInfo;
 import lombok.Getter;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 @Getter
-public class Theme implements CalculableEntity, WeightCalculableEntity {
+public class Theme extends NodeInfo<Topic> implements CalculableEntity, WeightCalculableEntity {
     private final EntityId id;
     private final ThemeName name;
     private final int weight;
@@ -19,8 +18,11 @@ public class Theme implements CalculableEntity, WeightCalculableEntity {
         this.name = name;
         this.weight = weight;
 
-        topics = new HashMap<>();
         id = EntityId.from(name);
+    }
+
+    public static Theme create(ThemeName name, int weight) {
+        return new Theme(name, weight);
     }
 
     @Override
@@ -28,55 +30,40 @@ public class Theme implements CalculableEntity, WeightCalculableEntity {
         return id;
     }
 
-    private final Map<TopicName, Topic> topics;
-
-    public static Theme create(ThemeName name, int weight) {
-        return new Theme(name, weight);
+    @Override
+    public Grade calculate(ServiceInfo service) {
+        return Calculator.weightAverage(nodes.values(), service);
     }
 
-    public int count() {
-        return topics.size();
-    }
 
-    public void add(Topic topic) {
-        topics.put(topic.getName(), topic);
-    }
-
-    public Topic get(TopicName topicName) {
-        return topics.get(topicName);
+    public Topic getByName(TopicName topicName) {
+        return nodes.values().stream()
+                .filter(x -> x.getName().equals(topicName))
+                .findFirst()
+                .get();
     }
 
     public void addRequirement(TopicName topicName, Requirement requirement)
             throws RequirementAlreadyExistsException, TopicNotFoundException {
 
-        if (!topics.containsKey(topicName)) {
+        Optional<Topic> topic = nodes.values().stream()
+                .filter(x -> x.getName().equals(topicName))
+                .findFirst();
+
+        if (topic.isEmpty()) {
             throw new TopicNotFoundException(topicName);
         }
-        topics.get(topicName).addRequirement(requirement);
-    }
 
-    public Grade calculate(ServiceInfo service) {
-        double total = 0;
-        int count = 0;
-        for (Topic topic: topics.values()) {
-            count += topic.getWeigth();
-            total += service.getAnswer(topic.getName())
-                    .map(answer -> topic.getGrade(answer))
-                    .orElse(Grade.MIN)
-                    .grade()
-                    .doubleValue() * topic.getWeigth();
-        }
-
-        return Grade.from(total / count);
+        topic.get().addRequirement(requirement);
     }
 
     public Set<Requirement> getUnusedRequirements(ServiceInfo service) {
         Set<Requirement> unusedRequirements = new HashSet<>();
 
-        for (Topic topic: topics.values()) {
+        for (Topic topic : nodes.values()) {
             service.getAnswer(topic.getName())
-                .map(answer -> topic.getUnusedRequirements(answer))
-                .ifPresent(x -> unusedRequirements.addAll(x));
+                    .map(answer -> topic.getUnusedRequirements(answer))
+                    .ifPresent(x -> unusedRequirements.addAll(x));
         }
 
         return unusedRequirements;

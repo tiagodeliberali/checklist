@@ -36,14 +36,14 @@ public class ServiceGrade {
             themeInfo.setWeight(theme.getWeight());
             themeInfo.setGrade(theme.calculate(service).grade().doubleValue());
 
-            theme.getTopics().values().forEach(topic -> {
+            theme.getIterator().forEachRemaining(topic -> {
                 ServiceTopicInfo topicInfo = new ServiceTopicInfo();
                 Grade topicGrade = service.getAnswer(topic.getName())
-                        .map(answer -> topic.getGrade(answer))
+                        .map(answer -> topic.calculate(service))
                         .orElse(Grade.MIN);
 
                 topicInfo.setGrade(topicGrade.grade().doubleValue());
-                topicInfo.setWeight(topic.getWeigth());
+                topicInfo.setWeight(topic.getWeight());
                 topicInfo.setName(topic.getName().id());
 
                 service.getAnswer(topic.getName())

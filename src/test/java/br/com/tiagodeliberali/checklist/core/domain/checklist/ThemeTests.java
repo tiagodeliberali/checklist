@@ -13,23 +13,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ThemeTests {
     @Test
     void add_requirement() throws EntityAlreadyExistException {
-        Theme theme = Theme.create(new ThemeName("scalability"), 10);
-        Topic topic = Topic.create(new TopicName("testability"), 5);
-        topic.add(Requirement.create(Grade.from(0.25), new RequirementName("missing manual tests doc")));
-        theme.add(topic);
+        Theme theme = createTheme();
 
-        assertThat(theme.count()).isOne();
-        assertThat(theme.get(EntityId.from(new TopicName("testability"))).count()).isOne();
+        assertThat(theme.count()).isEqualTo(2);
+        assertThat(theme.get(EntityId.from(new TopicName("testability"))).count()).isEqualTo(3);
     }
 
     @Test
     void calculate_grade() throws EntityAlreadyExistException {
         Theme theme = createTheme();
-
-        ServiceInfo service = ServiceInfo.create("us-tasks");
-        service.addRequirement(new TopicName("testability"), EntityId.from(new RequirementName("missing manual tests doc")));
-        service.addRequirement(new TopicName("testability"), EntityId.from(new RequirementName("no unit tests")));
-        service.addRequirement(new TopicName("health check"), EntityId.from(new RequirementName("not validating database")));
+        ServiceInfo service = createService();
 
         Grade grade = theme.calculate(service);
 
@@ -39,17 +32,21 @@ class ThemeTests {
     @Test
     void return_unused_requirements() throws EntityAlreadyExistException {
         Theme theme = createTheme();
-
-        ServiceInfo service = ServiceInfo.create("us-tasks");
-        service.addRequirement(new TopicName("testability"), EntityId.from(new RequirementName("missing manual tests doc")));
-        service.addRequirement(new TopicName("testability"), EntityId.from(new RequirementName("no unit tests")));
-        service.addRequirement(new TopicName("health check"), EntityId.from(new RequirementName("not validating database")));
+        ServiceInfo service = createService();
 
         Set<Requirement> unusedRequirements = theme.getUnusedRequirements(service);
 
         assertThat(unusedRequirements.size()).isEqualTo(2);
         SetRequirementAssert.assertThat(unusedRequirements).contains(new RequirementName("not in ci/cd"));
         SetRequirementAssert.assertThat(unusedRequirements).contains(new RequirementName("not validating sqs"));
+    }
+
+    private ServiceInfo createService() {
+        ServiceInfo service = ServiceInfo.create("us-tasks");
+        service.addRequirement(new TopicName("testability"), EntityId.from(new RequirementName("missing manual tests doc")));
+        service.addRequirement(new TopicName("testability"), EntityId.from(new RequirementName("no unit tests")));
+        service.addRequirement(new TopicName("health check"), EntityId.from(new RequirementName("not validating database")));
+        return service;
     }
 
     private Theme createTheme() throws EntityAlreadyExistException {

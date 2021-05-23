@@ -8,15 +8,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ChecklistTests {
     @Test
-    void create_checklist_with_multiple_topics_returns_correct_amounts() throws RequirementAlreadyExistsException {
+    void create_checklist_with_multiple_topics_returns_correct_amounts() throws RequirementAlreadyExistsException, ItemAlreadyExistException {
         Checklist checklist = buildChecklist();
 
-        assertThat(checklist.countThemes()).isEqualTo(2);
+        assertThat(checklist.count()).isEqualTo(2);
         assertThat(checklist.countTopics()).isEqualTo(3);
     }
 
     @Test
-    void calculate_grade_should_require_service_with_answers() throws RequirementAlreadyExistsException {
+    void calculate_grade_should_require_service_with_answers() throws RequirementAlreadyExistsException, ItemAlreadyExistException {
         Checklist checklist = buildChecklist();
 
         Grade grade = checklist.calculate(ServiceInfo.create("crm-pwa"));
@@ -25,7 +25,7 @@ class ChecklistTests {
     }
 
     @Test
-    void calculate_grade_without_missing_requirements_gets_max_grade() throws RequirementAlreadyExistsException {
+    void calculate_grade_without_missing_requirements_gets_max_grade() throws RequirementAlreadyExistsException, ItemAlreadyExistException {
         Checklist checklist = buildChecklist();
         
         ServiceInfo service = ServiceInfo.create("crm-pwa");
@@ -39,7 +39,7 @@ class ChecklistTests {
     }
 
     @Test
-    void calculate_partially_answered_service_info() throws RequirementAlreadyExistsException {
+    void calculate_partially_answered_service_info() throws RequirementAlreadyExistsException, ItemAlreadyExistException {
         // arrange
         Checklist checklist = buildChecklist();
 
@@ -55,7 +55,7 @@ class ChecklistTests {
         assertThat(grade).isEqualTo(Grade.from(0.36796875));
     }
 
-    private Checklist buildChecklist() throws RequirementAlreadyExistsException {
+    private Checklist buildChecklist() throws RequirementAlreadyExistsException, ItemAlreadyExistException {
         Checklist checklist = Checklist.create("tribe services");
 
         Theme theme1 = Theme.create(new ThemeName("scalability"), 5);

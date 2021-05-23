@@ -2,9 +2,10 @@
   "repo": "crm-pwa",
   "answers": [
     {
-      "topicName": "testability",
+      "topicName": "Testabilidade",
       "missedRequirements": [
-        "should have unit tests"
+        "faltam testes de integração",
+        "falta meta de coverage"
       ]
     }
   ]

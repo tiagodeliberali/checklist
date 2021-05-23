@@ -2,6 +2,7 @@ package br.com.tiagodeliberali.checklist.adapter.out.persistence;
 
 import br.com.tiagodeliberali.checklist.core.domain.Grade;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.Checklist;
+import br.com.tiagodeliberali.checklist.core.domain.checklist.ItemAlreadyExistException;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.RequirementAlreadyExistsException;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.RequirementName;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.Theme;
@@ -20,7 +21,11 @@ public class FileMapper {
 
         json.getThemes().forEach(themeJson -> {
             Theme theme = Theme.create(new ThemeName(themeJson.getName()), themeJson.getWeight());
-            checklist.add(theme);
+            try {
+                checklist.add(theme);
+            } catch (ItemAlreadyExistException e) {
+                logger.warn(e.getMessage());
+            }
 
             themeJson.getTopics().forEach(topicJson -> {
                 Topic topic = Topic.create(new TopicName(topicJson.getName()), topicJson.getWeight());

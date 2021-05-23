@@ -28,10 +28,6 @@ public class Topic {
         return new Topic(name, weight, RequirementList.from(new HashSet<>()));
     }
 
-    public Grade getMaxLoss() {
-        return requirements.getGrade();
-    }
-
     public int getRequirementsCount() {
         return requirements.count();
     }
@@ -73,5 +69,9 @@ public class Topic {
         answer.requirementsIterator().forEachRemaining(name -> names.add(name));
 
         return requirements.getRequirements(names);
+    }
+
+    public Grade getMaxLoss() {
+        return requirements.getGrade();
     }
 }

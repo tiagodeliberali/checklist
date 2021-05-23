@@ -7,6 +7,7 @@ import br.com.tiagodeliberali.checklist.core.application.service.ServiceTopicInf
 import br.com.tiagodeliberali.checklist.core.domain.Grade;
 import br.com.tiagodeliberali.checklist.core.domain.SetRequirementAssert;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.Checklist;
+import br.com.tiagodeliberali.checklist.core.domain.checklist.ItemAlreadyExistException;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.RequirementAlreadyExistsException;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.RequirementName;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.Theme;
@@ -21,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ServiceGradeTests {
     @Test
-    void build_grade() throws RequirementAlreadyExistsException {
+    void build_grade() throws RequirementAlreadyExistsException, ItemAlreadyExistException {
         // arrange
         Checklist checklist = Checklist.create("tribe services");
 

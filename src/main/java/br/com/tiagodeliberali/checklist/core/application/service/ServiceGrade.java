@@ -30,7 +30,7 @@ public class ServiceGrade {
         ServiceGrade serviceGrade = new ServiceGrade();
         serviceGrade.setGrade(checklist.calculate(service).grade().doubleValue());
 
-        checklist.getThemeIterator().forEachRemaining(theme -> {
+        checklist.getIterator().forEachRemaining(theme -> {
             ServiceThemeInfo themeInfo = new ServiceThemeInfo();
             themeInfo.setName(theme.getName().name());
             themeInfo.setWeight(theme.getWeight());

@@ -14,7 +14,7 @@ class LoadChecklistDiskTest {
         Checklist checklist = loadChecklist.load("checklist");
 
         assertThat(checklist.getName()).isEqualTo("service checklist");
-        assertThat(checklist.countThemes()).isOne();
+        assertThat(checklist.count()).isOne();
         assertThat(checklist.countTopics()).isOne();
     }
 }

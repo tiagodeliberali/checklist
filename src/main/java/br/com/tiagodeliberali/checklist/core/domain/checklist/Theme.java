@@ -2,7 +2,6 @@ package br.com.tiagodeliberali.checklist.core.domain.checklist;
 
 import br.com.tiagodeliberali.checklist.core.domain.Grade;
 import br.com.tiagodeliberali.checklist.core.domain.service.ServiceInfo;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -11,22 +10,36 @@ import java.util.Map;
 import java.util.Set;
 
 @Getter
-@AllArgsConstructor
-public class Theme {
+public class Theme implements CalculableEntity, WeightCalculableEntity {
+    private final EntityId id;
     private final ThemeName name;
     private final int weight;
+
+    private Theme(ThemeName name, int weight) {
+        this.name = name;
+        this.weight = weight;
+
+        topics = new HashMap<>();
+        id = EntityId.from(name);
+    }
+
+    @Override
+    public EntityId getId() {
+        return id;
+    }
+
     private final Map<TopicName, Topic> topics;
 
     public static Theme create(ThemeName name, int weight) {
-        return new Theme(name, weight, new HashMap<>());
-    }
-
-    public void add(Topic topic) {
-        topics.put(topic.getName(), topic);
+        return new Theme(name, weight);
     }
 
     public int count() {
         return topics.size();
+    }
+
+    public void add(Topic topic) {
+        topics.put(topic.getName(), topic);
     }
 
     public Topic get(TopicName topicName) {

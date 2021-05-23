@@ -39,8 +39,8 @@ public class Theme extends NodeInfo<Topic> implements CalculableEntity, WeightCa
 
         for (Topic topic : nodes.values()) {
             service.getAnswer(topic.getName())
-                    .map(answer -> topic.getUnusedRequirements(answer))
-                    .ifPresent(x -> unusedRequirements.addAll(x));
+                    .map(topic::getUnusedRequirements)
+                    .ifPresent(unusedRequirements::addAll);
         }
 
         return unusedRequirements;

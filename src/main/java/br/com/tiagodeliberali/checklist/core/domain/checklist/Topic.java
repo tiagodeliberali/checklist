@@ -35,7 +35,7 @@ public class Topic extends NodeInfo<Requirement> implements CalculableEntity, We
     @Override
     public Grade calculate(ServiceInfo service) {
         return service.getAnswer(name)
-                .map(x -> getGrade(x))
+                .map(this::getGrade)
                 .orElse(Grade.MIN);
     }
 
@@ -69,7 +69,7 @@ public class Topic extends NodeInfo<Requirement> implements CalculableEntity, We
 
     private Set<EntityId> getUsedRequirements(Answer answer) {
         Set<EntityId> usedRequirements = new HashSet<>();
-        answer.getIterator().forEachRemaining(id -> usedRequirements.add(id));
+        answer.getIterator().forEachRemaining(usedRequirements::add);
         return usedRequirements;
     }
 

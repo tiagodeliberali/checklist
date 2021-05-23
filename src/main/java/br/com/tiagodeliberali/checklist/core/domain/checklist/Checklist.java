@@ -17,7 +17,7 @@ public class Checklist extends NodeInfo<Theme> {
     }
 
     public int countTopics() {
-        return nodes.values().stream().mapToInt(x -> x.count()).sum();
+        return nodes.values().stream().mapToInt(NodeInfo::count).sum();
     }
 
     public Grade calculate(ServiceInfo service) {

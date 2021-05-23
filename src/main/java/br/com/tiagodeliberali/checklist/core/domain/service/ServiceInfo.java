@@ -1,5 +1,6 @@
 package br.com.tiagodeliberali.checklist.core.domain.service;
 
+import br.com.tiagodeliberali.checklist.core.domain.checklist.EntityId;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.RequirementName;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.TopicName;
 import lombok.AllArgsConstructor;
@@ -25,10 +26,10 @@ public class ServiceInfo {
         }
     }
 
-    public void addRequirement(TopicName topicName, RequirementName requirementName) {
+    public void addRequirement(TopicName topicName, EntityId requirementId) {
         addTopic(topicName);
 
-        answers.get(topicName).addMissingRequirement(requirementName);
+        answers.get(topicName).addMissingRequirement(requirementId);
     }
 
     public int count() {

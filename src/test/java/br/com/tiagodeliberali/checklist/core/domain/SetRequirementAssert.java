@@ -19,7 +19,7 @@ public class SetRequirementAssert extends AbstractAssert<SetRequirementAssert, S
 
     public SetRequirementAssert contains(RequirementName name) {
         Optional<Requirement> unused2 = actual.stream()
-                .filter(x -> x.name().equals(name))
+                .filter(x -> x.getName().equals(name))
                 .findFirst();
 
         Assertions.assertThat(unused2).isPresent();

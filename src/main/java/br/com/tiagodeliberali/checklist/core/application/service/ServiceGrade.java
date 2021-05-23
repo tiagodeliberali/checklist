@@ -51,16 +51,16 @@ public class ServiceGrade {
                         .orElse(topic.getUnusedRequirements(Answer.create(topic.getName())))
                         .forEach(requirement -> topicInfo
                                 .getUnusedRequirements().add(new ServiceRequirementInfo(
-                                        requirement.name().id(),
-                                        requirement.grade().grade().doubleValue())));
+                                        requirement.getName().id(),
+                                        requirement.getGrade().grade().doubleValue())));
 
                 service.getAnswer(topic.getName())
                         .map(answer -> topic.getMissingRequirements(answer))
                         .orElse(new HashSet<>())
                         .forEach(requirement -> topicInfo
                                 .getMissedRequirements().add(new ServiceRequirementInfo(
-                                        requirement.name().id(),
-                                        requirement.grade().grade().doubleValue())));
+                                        requirement.getName().id(),
+                                        requirement.getGrade().grade().doubleValue())));
 
                 themeInfo.getTopicsInfo().add(topicInfo);
             });

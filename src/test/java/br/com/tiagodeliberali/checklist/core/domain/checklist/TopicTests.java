@@ -5,7 +5,6 @@ import br.com.tiagodeliberali.checklist.core.domain.service.Answer;
 import br.com.tiagodeliberali.checklist.core.domain.service.ServiceInfo;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
 
@@ -13,58 +12,60 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class TopicTests {
     @Test
-    void create_topic_with_requirements() throws RequirementAlreadyExistsException {
+    void create_topic_with_requirements() throws EntityAlreadyExistException {
         Topic topic = Topic.create(new TopicName("testability"), 10);
-        topic.addRequirement(Requirement.create(Grade.from(0.25), new RequirementName("description one")));
-        topic.addRequirement(Requirement.create(Grade.from(0.25), new RequirementName("another description")));
-        topic.addRequirement(Requirement.create(Grade.from(0.25), new RequirementName("a third description value")));
-        topic.addRequirement(Requirement.create(Grade.from(0.25), new RequirementName("last issue to be named")));
+        topic.add(Requirement.create(Grade.from(0.25), new RequirementName("description one")));
+        topic.add(Requirement.create(Grade.from(0.25), new RequirementName("another description")));
+        topic.add(Requirement.create(Grade.from(0.25), new RequirementName("a third description value")));
+        topic.add(Requirement.create(Grade.from(0.25), new RequirementName("last issue to be named")));
 
         assertThat(topic.getMaxLoss()).isEqualTo(Grade.MAX);
-        assertThat(topic.getRequirementsCount()).isEqualTo(4);
+        assertThat(topic.count()).isEqualTo(4);
     }
 
     @Test
-    void add_requirement_to_topic() throws RequirementAlreadyExistsException {
+    void add_requirement_to_topic() throws EntityAlreadyExistException {
         Topic topic = Topic.create(new TopicName("testability"), 5);
 
-        topic.addRequirement(Grade.from(0.25), new RequirementName("description one"));
+        topic.add(Grade.from(0.25), new RequirementName("description one"));
 
         assertThat(topic.getMaxLoss()).isEqualTo(Grade.from(0.25));
-        assertThat(topic.getRequirementsCount()).isEqualTo(1);
+        assertThat(topic.count()).isEqualTo(1);
     }
 
     @Test
-    void max_loss_is_one() throws RequirementAlreadyExistsException {
+    void max_loss_is_one() throws EntityAlreadyExistException {
         Topic topic = Topic.create(new TopicName("testability"), 10);
-        topic.addRequirement(Requirement.create(Grade.from(0.75), new RequirementName("description one")));
-        topic.addRequirement(Requirement.create(Grade.from(0.75), new RequirementName("another description")));
+        topic.add(Requirement.create(Grade.from(0.75), new RequirementName("description one")));
+        topic.add(Requirement.create(Grade.from(0.75), new RequirementName("another description")));
 
         assertThat(topic.getMaxLoss()).isEqualTo(Grade.MAX);
     }
 
     @Test
-    void remove_requirement_from_topic() throws RequirementNotFoundException, RequirementAlreadyExistsException {
+    void remove_requirement_from_topic() throws EntityAlreadyExistException, EntityNotFoundException {
         Topic topic = Topic.create(new TopicName("testability"), 10);
-        topic.addRequirement(Requirement.create(Grade.from(0.5), new RequirementName("description one")));
-        topic.addRequirement(Requirement.create(Grade.from(0.4), new RequirementName("another description")));
+        topic.add(Requirement.create(Grade.from(0.5), new RequirementName("description one")));
+        topic.add(Requirement.create(Grade.from(0.4), new RequirementName("another description")));
 
-        topic.removeRequirement(new RequirementName("description one"));
+        topic.remove(EntityId.from(new RequirementName("description one")));
 
         assertThat(topic.getMaxLoss()).isEqualTo(Grade.from(0.4));
-        assertThat(topic.getRequirementsCount()).isEqualTo(1);
+        assertThat(topic.count()).isEqualTo(1);
     }
 
     @Test
-    void calculate_grade_from_answer() throws RequirementAlreadyExistsException {
+    void calculate_grade_from_answer() throws EntityAlreadyExistException {
         Topic topic = Topic.create(new TopicName("testability"), 10);
-        topic.addRequirement(Requirement.create(Grade.from(0.5), new RequirementName("description one")));
-        topic.addRequirement(Requirement.create(Grade.from(0.4), new RequirementName("another description")));
-        topic.addRequirement(Requirement.create(Grade.from(0.3), new RequirementName("third description")));
+        topic.add(Requirement.create(Grade.from(0.5), new RequirementName("description one")));
+        topic.add(Requirement.create(Grade.from(0.4), new RequirementName("another description")));
+        topic.add(Requirement.create(Grade.from(0.3), new RequirementName("third description")));
 
         ServiceInfo service = ServiceInfo.create("test");
-        service.addRequirement(new TopicName("testability"), new RequirementName("third description"));
-        service.addRequirement(new TopicName("testability"), new RequirementName("another description"));
+        service.addRequirement(
+                new TopicName("testability"), EntityId.from(new RequirementName("third description")));
+        service.addRequirement(
+                new TopicName("testability"), EntityId.from(new RequirementName("another description")));
 
         Grade grade = topic.calculate(service);
 
@@ -72,22 +73,22 @@ class TopicTests {
     }
 
     @Test
-    void get_requirements_not_used() throws RequirementAlreadyExistsException {
+    void get_requirements_not_used() throws EntityAlreadyExistException {
         Topic topic = Topic.create(new TopicName("testability"), 10);
-        topic.addRequirement(Requirement.create(Grade.from(0.5), new RequirementName("description one")));
-        topic.addRequirement(Requirement.create(Grade.from(0.4), new RequirementName("another description")));
-        topic.addRequirement(Requirement.create(Grade.from(0.3), new RequirementName("third description")));
+        topic.add(Requirement.create(Grade.from(0.5), new RequirementName("description one")));
+        topic.add(Requirement.create(Grade.from(0.4), new RequirementName("another description")));
+        topic.add(Requirement.create(Grade.from(0.3), new RequirementName("third description")));
 
         Answer answer = Answer.create(new TopicName("testability"));
-        answer.addMissingRequirement(new RequirementName("third description"));
-        answer.addMissingRequirement(new RequirementName("another description"));
+        answer.addMissingRequirement(EntityId.from(new RequirementName("third description")));
+        answer.addMissingRequirement(EntityId.from(new RequirementName("another description")));
 
         Set<Requirement> unusedRequirements = topic.getUnusedRequirements(answer);
 
         assertThat(unusedRequirements.size()).isOne();
 
         Optional<Requirement> unused = unusedRequirements.stream()
-                .filter(x -> x.name().equals(new RequirementName("description one")))
+                .filter(x -> x.getName().equals(new RequirementName("description one")))
                 .findFirst();
 
         assertThat(unused).isPresent();

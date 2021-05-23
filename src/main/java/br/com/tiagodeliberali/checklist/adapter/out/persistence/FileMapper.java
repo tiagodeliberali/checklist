@@ -2,8 +2,8 @@ package br.com.tiagodeliberali.checklist.adapter.out.persistence;
 
 import br.com.tiagodeliberali.checklist.core.domain.Grade;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.Checklist;
-import br.com.tiagodeliberali.checklist.core.domain.checklist.ItemAlreadyExistException;
-import br.com.tiagodeliberali.checklist.core.domain.checklist.RequirementAlreadyExistsException;
+import br.com.tiagodeliberali.checklist.core.domain.checklist.EntityAlreadyExistException;
+import br.com.tiagodeliberali.checklist.core.domain.checklist.EntityId;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.RequirementName;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.Theme;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.ThemeName;
@@ -23,7 +23,7 @@ public class FileMapper {
             Theme theme = Theme.create(new ThemeName(themeJson.getName()), themeJson.getWeight());
             try {
                 checklist.add(theme);
-            } catch (ItemAlreadyExistException e) {
+            } catch (EntityAlreadyExistException e) {
                 logger.warn(e.getMessage());
             }
 
@@ -31,16 +31,16 @@ public class FileMapper {
                 Topic topic = Topic.create(new TopicName(topicJson.getName()), topicJson.getWeight());
                 try {
                     theme.add(topic);
-                } catch (ItemAlreadyExistException e) {
+                } catch (EntityAlreadyExistException e) {
                     logger.warn(e.getMessage());
                 }
 
                 topicJson.getRequirements().forEach(requirementJson -> {
                     try {
-                        topic.addRequirement(
+                        topic.add(
                                 Grade.from(requirementJson.getGrade()),
                                 new RequirementName(requirementJson.getName()));
-                    } catch (RequirementAlreadyExistsException e) {
+                    } catch (EntityAlreadyExistException e) {
                         logger.warn("[LoadChecklistDisk] " + e.getMessage());
                     }
                 });
@@ -56,7 +56,9 @@ public class FileMapper {
         json.getAnswers().forEach(answerJson -> answerJson
                 .getMissedRequirements()
                 .forEach(requirement -> serviceInfo
-                        .addRequirement(new TopicName(answerJson.getTopicName()), new RequirementName(requirement))));
+                        .addRequirement(
+                                new TopicName(answerJson.getTopicName()),
+                                EntityId.from(new RequirementName(requirement)))));
 
         return serviceInfo;
     }

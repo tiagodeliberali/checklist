@@ -6,14 +6,13 @@ import br.com.tiagodeliberali.checklist.core.domain.service.ServiceInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ThemeTests {
     @Test
-    void add_requirement() throws RequirementAlreadyExistsException, TopicNotFoundException, ItemAlreadyExistException {
+    void add_requirement() throws TopicNotFoundException, EntityAlreadyExistException {
         Theme theme = Theme.create(new ThemeName("scalability"), 10);
 
         theme.add(Topic.create(new TopicName("testability"), 5));
@@ -22,7 +21,7 @@ class ThemeTests {
                 Requirement.create(Grade.from(0.25), new RequirementName("missing manual tests doc")));
 
         assertThat(theme.count()).isOne();
-        assertThat(theme.getByName(new TopicName("testability")).getRequirementsCount()).isOne();
+        assertThat(theme.get(EntityId.from(new TopicName("testability"))).count()).isOne();
     }
 
     @Test
@@ -36,13 +35,13 @@ class ThemeTests {
     }
 
     @Test
-    void calculate_grade() throws ItemAlreadyExistException, RequirementAlreadyExistsException {
+    void calculate_grade() throws EntityAlreadyExistException {
         Theme theme = createTheme();
 
         ServiceInfo service = ServiceInfo.create("us-tasks");
-        service.addRequirement(new TopicName("testability"), new RequirementName("missing manual tests doc"));
-        service.addRequirement(new TopicName("testability"), new RequirementName("no unit tests"));
-        service.addRequirement(new TopicName("health check"), new RequirementName("not validating database"));
+        service.addRequirement(new TopicName("testability"), EntityId.from(new RequirementName("missing manual tests doc")));
+        service.addRequirement(new TopicName("testability"), EntityId.from(new RequirementName("no unit tests")));
+        service.addRequirement(new TopicName("health check"), EntityId.from(new RequirementName("not validating database")));
 
         Grade grade = theme.calculate(service);
 
@@ -50,13 +49,13 @@ class ThemeTests {
     }
 
     @Test
-    void return_unused_requirements() throws ItemAlreadyExistException, RequirementAlreadyExistsException {
+    void return_unused_requirements() throws EntityAlreadyExistException {
         Theme theme = createTheme();
 
         ServiceInfo service = ServiceInfo.create("us-tasks");
-        service.addRequirement(new TopicName("testability"), new RequirementName("missing manual tests doc"));
-        service.addRequirement(new TopicName("testability"), new RequirementName("no unit tests"));
-        service.addRequirement(new TopicName("health check"), new RequirementName("not validating database"));
+        service.addRequirement(new TopicName("testability"), EntityId.from(new RequirementName("missing manual tests doc")));
+        service.addRequirement(new TopicName("testability"), EntityId.from(new RequirementName("no unit tests")));
+        service.addRequirement(new TopicName("health check"), EntityId.from(new RequirementName("not validating database")));
 
         Set<Requirement> unusedRequirements = theme.getUnusedRequirements(service);
 
@@ -65,19 +64,19 @@ class ThemeTests {
         SetRequirementAssert.assertThat(unusedRequirements).contains(new RequirementName("not validating sqs"));
     }
 
-    private Theme createTheme() throws ItemAlreadyExistException, RequirementAlreadyExistsException {
+    private Theme createTheme() throws EntityAlreadyExistException {
         Theme theme = Theme.create(new ThemeName("scalability"), 10);
 
         Topic topic1 = Topic.create(new TopicName("testability"), 5);
-        topic1.addRequirement(Requirement.create(Grade.from(0.2), new RequirementName("missing manual tests doc")));
-        topic1.addRequirement(Requirement.create(Grade.from(0.4), new RequirementName("no unit tests")));
-        topic1.addRequirement(Requirement.create(Grade.from(0.8), new RequirementName("not in ci/cd")));
+        topic1.add(Requirement.create(Grade.from(0.2), new RequirementName("missing manual tests doc")));
+        topic1.add(Requirement.create(Grade.from(0.4), new RequirementName("no unit tests")));
+        topic1.add(Requirement.create(Grade.from(0.8), new RequirementName("not in ci/cd")));
 
         theme.add(topic1);
 
         Topic topic2 = Topic.create(new TopicName("health check"), 2);
-        topic2.addRequirement(Requirement.create(Grade.from(0.3), new RequirementName("not validating database")));
-        topic2.addRequirement(Requirement.create(Grade.from(0.6), new RequirementName("not validating sqs")));
+        topic2.add(Requirement.create(Grade.from(0.3), new RequirementName("not validating database")));
+        topic2.add(Requirement.create(Grade.from(0.6), new RequirementName("not validating sqs")));
 
         theme.add(topic2);
 

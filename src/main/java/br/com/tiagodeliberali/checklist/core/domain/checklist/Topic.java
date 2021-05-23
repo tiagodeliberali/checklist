@@ -8,18 +8,18 @@ import lombok.Getter;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
-public class Topic implements CalculableEntity, WeightCalculableEntity {
+public class Topic extends NodeInfo<Requirement> implements CalculableEntity, WeightCalculableEntity {
     private final EntityId id;
     private final TopicName name;
     private final int weight;
-    private final RequirementList requirements;
 
     private Topic(TopicName name, int weight) {
         this.name = name;
         this.weight = weight;
-        requirements = RequirementList.from(new HashSet<>());
+
         id = EntityId.from(name);
     }
 
@@ -37,51 +37,46 @@ public class Topic implements CalculableEntity, WeightCalculableEntity {
         return service.getAnswer(name).map(x -> getGrade(x)).orElse(Grade.MIN);
     }
 
-    public int getRequirementsCount() {
-        return requirements.count();
-    }
-
-    public void addRequirement(Grade grade, RequirementName name) throws RequirementAlreadyExistsException {
-        addRequirement(Requirement.create(grade, name));
-    }
-
-    public void addRequirement(Requirement requirement) throws RequirementAlreadyExistsException {
-        requirements.add(requirement);
-    }
-
-    public void removeRequirement(RequirementName id) throws RequirementNotFoundException {
-        requirements.remove(id);
+    public void add(Grade grade, RequirementName name) throws EntityAlreadyExistException {
+        add(Requirement.create(grade, name));
     }
 
     private Grade getGrade(Answer answer) {
         Grade grade = Grade.MAX;
-        Iterator<RequirementName> iterator = answer.requirementsIterator();
+        Iterator<EntityId> iterator = answer.getIterator();
 
         while (iterator.hasNext()) {
-            grade = grade.minus(requirements.getGrade(iterator.next()).grade().doubleValue());
+            grade = grade.minus(nodes.get(iterator.next()).getGrade().grade().doubleValue());
         }
 
         return grade;
     }
 
     public Set<Requirement> getUnusedRequirements(Answer answer) {
-        Set<RequirementName> names = new HashSet<>();
+        Set<EntityId> usedRequirements = new HashSet<>();
+        answer.getIterator().forEachRemaining(id -> usedRequirements.add(id));
 
-        answer.requirementsIterator().forEachRemaining(name -> names.add(name));
+        Set<EntityId> unusedRequirements = new HashSet<>(nodes.keySet());
+        unusedRequirements.removeAll(usedRequirements);
 
-        return requirements.getMissingRequirements(names);
+        return nodes.values().stream()
+                .filter(requirement -> unusedRequirements.contains(requirement.getId()))
+                .collect(Collectors.toSet());
     }
 
     public Set<Requirement> getMissingRequirements(Answer answer) {
-        Set<RequirementName> names = new HashSet<>();
+        Set<EntityId> usedRequirements = new HashSet<>();
+        answer.getIterator().forEachRemaining(id -> usedRequirements.add(id));
 
-        answer.requirementsIterator().forEachRemaining(name -> names.add(name));
-
-        return requirements.getRequirements(names);
+        return nodes.values().stream()
+                .filter(requirement -> usedRequirements.contains(requirement.getId()))
+                .collect(Collectors.toSet());
     }
 
     public Grade getMaxLoss() {
-        return requirements.getGrade();
+        return Grade.MIN.plus(nodes.values().stream()
+                .mapToDouble(x -> x.getGrade().grade().doubleValue())
+                .sum());
     }
 
 

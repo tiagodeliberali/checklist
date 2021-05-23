@@ -5,10 +5,9 @@ import br.com.tiagodeliberali.checklist.core.application.service.ServiceRequirem
 import br.com.tiagodeliberali.checklist.core.application.service.ServiceThemeInfo;
 import br.com.tiagodeliberali.checklist.core.application.service.ServiceTopicInfo;
 import br.com.tiagodeliberali.checklist.core.domain.Grade;
-import br.com.tiagodeliberali.checklist.core.domain.SetRequirementAssert;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.Checklist;
-import br.com.tiagodeliberali.checklist.core.domain.checklist.ItemAlreadyExistException;
-import br.com.tiagodeliberali.checklist.core.domain.checklist.RequirementAlreadyExistsException;
+import br.com.tiagodeliberali.checklist.core.domain.checklist.EntityAlreadyExistException;
+import br.com.tiagodeliberali.checklist.core.domain.checklist.EntityId;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.RequirementName;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.Theme;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.ThemeName;
@@ -22,33 +21,33 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ServiceGradeTests {
     @Test
-    void build_grade() throws RequirementAlreadyExistsException, ItemAlreadyExistException {
+    void build_grade() throws EntityAlreadyExistException {
         // arrange
         Checklist checklist = Checklist.create("tribe services");
 
         Theme theme1 = Theme.create(new ThemeName("scalability"), 1);
         Topic topic1 = Topic.create(new TopicName("topic1"), 1);
-        topic1.addRequirement(Grade.from(0.5), new RequirementName("req1"));
-        topic1.addRequirement(Grade.from(0.5), new RequirementName("req2"));
+        topic1.add(Grade.from(0.5), new RequirementName("req1"));
+        topic1.add(Grade.from(0.5), new RequirementName("req2"));
         theme1.add(topic1);
 
         Topic topic2 = Topic.create(new TopicName("topic2"), 1);
-        topic2.addRequirement(Grade.from(0.5), new RequirementName("req3"));
+        topic2.add(Grade.from(0.5), new RequirementName("req3"));
         theme1.add(topic2);
         checklist.add(theme1);
 
         Theme theme2 = Theme.create(new ThemeName("monitoring"), 1);
         Topic topic3 = Topic.create(new TopicName("topic3"), 1);
-        topic3.addRequirement(Grade.from(0.5), new RequirementName("req4"));
-        topic3.addRequirement(Grade.from(0.5), new RequirementName("req5"));
-        topic3.addRequirement(Grade.from(0.5), new RequirementName("req6"));
+        topic3.add(Grade.from(0.5), new RequirementName("req4"));
+        topic3.add(Grade.from(0.5), new RequirementName("req5"));
+        topic3.add(Grade.from(0.5), new RequirementName("req6"));
         theme2.add(topic3);
         checklist.add(theme2);
 
         ServiceInfo service = ServiceInfo.create("crm-pwa");
-        service.addRequirement(new TopicName("topic1"), new RequirementName("req1"));
-        service.addRequirement(new TopicName("topic3"), new RequirementName("req5"));
-        service.addRequirement(new TopicName("topic3"), new RequirementName("req6"));
+        service.addRequirement(new TopicName("topic1"), EntityId.from(new RequirementName("req1")));
+        service.addRequirement(new TopicName("topic3"), EntityId.from(new RequirementName("req5")));
+        service.addRequirement(new TopicName("topic3"), EntityId.from(new RequirementName("req6")));
 
         // act
         ServiceGrade serviceGrade = ServiceGrade.build(checklist, service);

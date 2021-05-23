@@ -14,11 +14,23 @@ public class NodeInfo<ITEM extends CalculableEntity> {
         return nodes.size();
     }
 
-    public void add(ITEM item) throws ItemAlreadyExistException {
+    public void add(ITEM item) throws EntityAlreadyExistException {
         if (nodes.containsKey(item.getId())) {
-            throw new ItemAlreadyExistException(item.getId());
+            throw new EntityAlreadyExistException(item.getId());
         }
         nodes.put(item.getId(), item);
+    }
+
+    public void remove(EntityId id) throws EntityNotFoundException {
+        if (!nodes.containsKey(id)) {
+            throw new EntityNotFoundException(id);
+        }
+
+        nodes.remove(id);
+    }
+
+    public ITEM get(EntityId id) {
+        return nodes.get(id);
     }
 
     public Iterator<ITEM> getIterator() {

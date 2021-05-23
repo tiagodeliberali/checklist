@@ -17,10 +17,17 @@ public record EntityId(String id) {
                 name.id().hashCode()));
     }
 
+    public static EntityId from(RequirementName name) {
+        return new EntityId(String.format("%s-%d",
+                getSmallName(name.id()),
+                name.id().hashCode()));
+    }
+
     private static String getSmallName(String name) {
-        return name
+        String result =  name
                 .toLowerCase()
-                .replaceAll(" ", "")
-                .substring(0, 5);
+                .replaceAll(" ", "");
+
+        return result.substring(0, Math.min(5, result.length()));
     }
 }

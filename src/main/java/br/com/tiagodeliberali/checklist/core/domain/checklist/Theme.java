@@ -5,7 +5,6 @@ import br.com.tiagodeliberali.checklist.core.domain.service.ServiceInfo;
 import lombok.Getter;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 @Getter

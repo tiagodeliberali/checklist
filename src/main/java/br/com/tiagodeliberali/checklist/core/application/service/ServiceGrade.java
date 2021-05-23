@@ -55,7 +55,7 @@ public class ServiceGrade {
                                         requirement.getGrade().grade().doubleValue())));
 
                 service.getAnswer(topic.getName())
-                        .map(answer -> topic.getMissingRequirements(answer))
+                        .map(answer -> topic.getRequirements(answer))
                         .orElse(new HashSet<>())
                         .forEach(requirement -> topicInfo
                                 .getMissedRequirements().add(new ServiceRequirementInfo(

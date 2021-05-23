@@ -51,24 +51,26 @@ public class Topic extends NodeInfo<Requirement> implements CalculableEntity, We
     }
 
     public Set<Requirement> getUnusedRequirements(Answer answer) {
-        Set<EntityId> usedRequirements = new HashSet<>();
-        answer.getIterator().forEachRemaining(id -> usedRequirements.add(id));
-
         Set<EntityId> unusedRequirements = new HashSet<>(nodes.keySet());
-        unusedRequirements.removeAll(usedRequirements);
+        unusedRequirements.removeAll(getUsedRequirements(answer));
 
         return nodes.values().stream()
                 .filter(requirement -> unusedRequirements.contains(requirement.getId()))
                 .collect(Collectors.toSet());
     }
 
-    public Set<Requirement> getMissingRequirements(Answer answer) {
-        Set<EntityId> usedRequirements = new HashSet<>();
-        answer.getIterator().forEachRemaining(id -> usedRequirements.add(id));
+    public Set<Requirement> getRequirements(Answer answer) {
+        Set<EntityId> usedRequirements = getUsedRequirements(answer);
 
         return nodes.values().stream()
                 .filter(requirement -> usedRequirements.contains(requirement.getId()))
                 .collect(Collectors.toSet());
+    }
+
+    private Set<EntityId> getUsedRequirements(Answer answer) {
+        Set<EntityId> usedRequirements = new HashSet<>();
+        answer.getIterator().forEachRemaining(id -> usedRequirements.add(id));
+        return usedRequirements;
     }
 
     public Grade getMaxLoss() {

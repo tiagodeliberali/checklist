@@ -1,29 +1,24 @@
 package br.com.tiagodeliberali.checklist.core.domain.service;
 
 import br.com.tiagodeliberali.checklist.core.domain.checklist.EntityId;
-import br.com.tiagodeliberali.checklist.core.domain.checklist.RequirementName;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.TopicName;
 import lombok.AllArgsConstructor;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 public class Answer {
     private final TopicName topicName;
-     private final List<EntityId> missedRequirements;
+    private final Set<EntityId> missedRequirements;
 
     public static Answer create(TopicName topicName) {
-        return new Answer(topicName, new ArrayList<>());
+        return new Answer(topicName, new HashSet<>());
     }
 
     public void addMissingRequirement(EntityId requirementId) {
         missedRequirements.add(requirementId);
-    }
-
-    public void removeMissingRequirement(EntityId requirementId) {
-        missedRequirements.remove(requirementId);
     }
 
     public Iterator<EntityId> getIterator() {

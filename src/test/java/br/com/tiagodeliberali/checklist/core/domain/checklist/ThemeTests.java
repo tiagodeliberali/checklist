@@ -14,24 +14,12 @@ class ThemeTests {
     @Test
     void add_requirement() throws TopicNotFoundException, EntityAlreadyExistException {
         Theme theme = Theme.create(new ThemeName("scalability"), 10);
-
-        theme.add(Topic.create(new TopicName("testability"), 5));
-        theme.addRequirement(
-                new TopicName("testability"),
-                Requirement.create(Grade.from(0.25), new RequirementName("missing manual tests doc")));
+        Topic topic = Topic.create(new TopicName("testability"), 5);
+        topic.add(Requirement.create(Grade.from(0.25), new RequirementName("missing manual tests doc")));
+        theme.add(topic);
 
         assertThat(theme.count()).isOne();
         assertThat(theme.get(EntityId.from(new TopicName("testability"))).count()).isOne();
-    }
-
-    @Test
-    void add_requirement_when_topic_not_exists_throws_exception() {
-        Theme theme = Theme.create(new ThemeName("scalability"), 10);
-
-        Assertions.assertThrows(TopicNotFoundException.class, () -> theme.addRequirement(
-                new TopicName("testability"),
-                Requirement.create(Grade.from(0.25), new RequirementName("missing manual tests doc")))
-        );
     }
 
     @Test

@@ -34,7 +34,9 @@ public class Topic extends NodeInfo<Requirement> implements CalculableEntity, We
 
     @Override
     public Grade calculate(ServiceInfo service) {
-        return service.getAnswer(name).map(x -> getGrade(x)).orElse(Grade.MIN);
+        return service.getAnswer(name)
+                .map(x -> getGrade(x))
+                .orElse(Grade.MIN);
     }
 
     private Grade getGrade(Answer answer) {
@@ -74,6 +76,4 @@ public class Topic extends NodeInfo<Requirement> implements CalculableEntity, We
                 .mapToDouble(x -> x.getGrade().grade().doubleValue())
                 .sum());
     }
-
-
 }

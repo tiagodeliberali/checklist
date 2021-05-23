@@ -35,20 +35,6 @@ public class Theme extends NodeInfo<Topic> implements CalculableEntity, WeightCa
         return Calculator.weightAverage(nodes.values(), service);
     }
 
-    public void addRequirement(TopicName topicName, Requirement requirement)
-            throws TopicNotFoundException, EntityAlreadyExistException {
-
-        Optional<Topic> topic = nodes.values().stream()
-                .filter(x -> x.getName().equals(topicName))
-                .findFirst();
-
-        if (topic.isEmpty()) {
-            throw new TopicNotFoundException(topicName);
-        }
-
-        topic.get().add(requirement);
-    }
-
     public Set<Requirement> getUnusedRequirements(ServiceInfo service) {
         Set<Requirement> unusedRequirements = new HashSet<>();
 

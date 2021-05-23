@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class FileMapper {
-    private static Logger logger = LoggerFactory.getLogger(LoadChecklistDisk.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoadChecklistDisk.class);
 
     public static Checklist from(ChecklistJson json) {
         Checklist checklist = Checklist.create(json.getName());

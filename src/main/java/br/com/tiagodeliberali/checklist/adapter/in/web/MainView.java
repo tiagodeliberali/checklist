@@ -3,8 +3,6 @@ package br.com.tiagodeliberali.checklist.adapter.in.web;
 import br.com.tiagodeliberali.checklist.core.application.port.out.FailedToLoadException;
 import br.com.tiagodeliberali.checklist.core.application.service.CalculateGradeService;
 import br.com.tiagodeliberali.checklist.core.application.service.ServiceGrade;
-import br.com.tiagodeliberali.checklist.core.application.service.ServiceThemeInfo;
-import br.com.tiagodeliberali.checklist.core.application.service.ServiceTopicInfo;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;

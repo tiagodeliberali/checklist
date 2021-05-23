@@ -61,13 +61,13 @@ class ServiceGradeTests {
         assertThat(themeInfo1).isPresent();
         assertThat(themeInfo1.get().getGrade()).isEqualTo(0.250);
 
-        Optional<ServiceTopicInfo> topicInfo1 = themeInfo1.get().getTopic("topic1");
+        Optional<ServiceTopicInfo> topicInfo1 = getTopic(themeInfo1.get().getTopicsInfo(), "topic1");
         assertThat(topicInfo1).isPresent();
         assertThat(topicInfo1.get().getGrade()).isEqualTo(0.5);
         assertThatContainsRequirementName(topicInfo1.get().getMissedRequirements(), "req1");
         assertThatContainsRequirementName(topicInfo1.get().getUnusedRequirements(), "req2");
 
-        Optional<ServiceTopicInfo> topicInfo2 = themeInfo1.get().getTopic("topic2");
+        Optional<ServiceTopicInfo> topicInfo2 = getTopic(themeInfo1.get().getTopicsInfo(), "topic2");
         assertThat(topicInfo2).isPresent();
         assertThat(topicInfo2.get().getGrade()).isEqualTo(0);
         assertThat(topicInfo2.get().getMissedRequirements()).isEmpty();
@@ -77,12 +77,16 @@ class ServiceGradeTests {
         assertThat(themeInfo2).isPresent();
         assertThat(themeInfo2.get().getGrade()).isEqualTo(0);
 
-        Optional<ServiceTopicInfo> topicInfo3 = themeInfo2.get().getTopic("topic3");
+        Optional<ServiceTopicInfo> topicInfo3 = getTopic(themeInfo2.get().getTopicsInfo(), "topic3");
         assertThat(topicInfo3).isPresent();
         assertThat(topicInfo3.get().getGrade()).isEqualTo(0);
         assertThatContainsRequirementName(topicInfo3.get().getMissedRequirements(), "req5");
         assertThatContainsRequirementName(topicInfo3.get().getMissedRequirements(), "req6");
         assertThatContainsRequirementName(topicInfo3.get().getUnusedRequirements(), "req4");
+    }
+
+    private Optional<ServiceTopicInfo> getTopic(List<ServiceTopicInfo> topicsInfo, String name) {
+        return topicsInfo.stream().filter(x -> x.getName().equals(name)).findFirst();
     }
 
     private void assertThatContainsRequirementName(List<ServiceRequirementInfo> list, String name) {

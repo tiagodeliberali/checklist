@@ -13,14 +13,14 @@ public record EntityId(String id) {
 
     public static EntityId from(TopicName name) {
         return new EntityId(String.format("%s-%d",
-                getSmallName(name.id()),
-                name.id().hashCode()));
+                getSmallName(name.name()),
+                name.name().hashCode()));
     }
 
     public static EntityId from(RequirementName name) {
         return new EntityId(String.format("%s-%d",
-                getSmallName(name.id()),
-                name.id().hashCode()));
+                getSmallName(name.name()),
+                name.name().hashCode()));
     }
 
     private static String getSmallName(String name) {

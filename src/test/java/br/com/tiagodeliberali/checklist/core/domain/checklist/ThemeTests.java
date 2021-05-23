@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ThemeTests {
     @Test
-    void add_requirement() throws TopicNotFoundException, EntityAlreadyExistException {
+    void add_requirement() throws EntityAlreadyExistException {
         Theme theme = Theme.create(new ThemeName("scalability"), 10);
         Topic topic = Topic.create(new TopicName("testability"), 5);
         topic.add(Requirement.create(Grade.from(0.25), new RequirementName("missing manual tests doc")));

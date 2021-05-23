@@ -45,8 +45,8 @@ class ChecklistTests {
 
         ServiceInfo service = ServiceInfo.create("crm-pwa");
         service.addRequirement(new TopicName("testability"), EntityId.from(new RequirementName("should have manual tests description")));
-        service.addRequirement(new TopicName("kibana log"), EntityId.from(new RequirementName("should have relevant id data")));
-        service.addRequirement(new TopicName("kibana log"), EntityId.from(new RequirementName("should have trace id")));
+        service.addRequirement(new TopicName("kibana log"), EntityId.from(new RequirementName("should have relevant name data")));
+        service.addRequirement(new TopicName("kibana log"), EntityId.from(new RequirementName("should have trace name")));
 
         // act
         Grade grade = checklist.calculate(service);
@@ -72,8 +72,8 @@ class ChecklistTests {
         Theme theme2 = Theme.create(new ThemeName("monitoring"), 3);
         Topic topic3 = Topic.create(new TopicName("kibana log"), 10);
         topic3.add(Requirement.create(Grade.from(0.7), new RequirementName("should not break one log by line")));
-        topic3.add(Requirement.create(Grade.from(0.5), new RequirementName("should have relevant id data")));
-        topic3.add(Requirement.create(Grade.from(0.3), new RequirementName("should have trace id")));
+        topic3.add(Requirement.create(Grade.from(0.5), new RequirementName("should have relevant name data")));
+        topic3.add(Requirement.create(Grade.from(0.3), new RequirementName("should have trace name")));
         theme2.add(topic3);
         checklist.add(theme2);
 

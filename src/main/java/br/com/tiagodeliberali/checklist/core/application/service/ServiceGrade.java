@@ -44,14 +44,14 @@ public class ServiceGrade {
 
                 topicInfo.setGrade(topicGrade.grade().doubleValue());
                 topicInfo.setWeight(topic.getWeight());
-                topicInfo.setName(topic.getName().id());
+                topicInfo.setName(topic.getName().name());
 
                 service.getAnswer(topic.getName())
                         .map(answer -> topic.getUnusedRequirements(answer))
                         .orElse(topic.getUnusedRequirements(Answer.create(topic.getName())))
                         .forEach(requirement -> topicInfo
                                 .getUnusedRequirements().add(new ServiceRequirementInfo(
-                                        requirement.getName().id(),
+                                        requirement.getName().name(),
                                         requirement.getGrade().grade().doubleValue())));
 
                 service.getAnswer(topic.getName())
@@ -59,7 +59,7 @@ public class ServiceGrade {
                         .orElse(new HashSet<>())
                         .forEach(requirement -> topicInfo
                                 .getMissedRequirements().add(new ServiceRequirementInfo(
-                                        requirement.getName().id(),
+                                        requirement.getName().name(),
                                         requirement.getGrade().grade().doubleValue())));
 
                 themeInfo.getTopicsInfo().add(topicInfo);

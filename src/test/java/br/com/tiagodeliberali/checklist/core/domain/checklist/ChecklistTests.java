@@ -60,20 +60,20 @@ class ChecklistTests {
 
         Theme theme1 = Theme.create(new ThemeName("scalability"), 5);
         Topic topic1 = Topic.create(new TopicName("testability"), 10);
-        topic1.add(Grade.from(0.25), new RequirementName("should have manual tests description"));
-        topic1.add(Grade.from(0.5), new RequirementName("should have unit tests"));
+        topic1.add(Requirement.create(Grade.from(0.25), new RequirementName("should have manual tests description")));
+        topic1.add(Requirement.create(Grade.from(0.5), new RequirementName("should have unit tests")));
         theme1.add(topic1);
 
         Topic topic2 = Topic.create(new TopicName("database migration"), 6);
-        topic2.add(Grade.from(0.4), new RequirementName("should have migration"));
+        topic2.add(Requirement.create(Grade.from(0.4), new RequirementName("should have migration")));
         theme1.add(topic2);
         checklist.add(theme1);
 
         Theme theme2 = Theme.create(new ThemeName("monitoring"), 3);
         Topic topic3 = Topic.create(new TopicName("kibana log"), 10);
-        topic3.add(Grade.from(0.7), new RequirementName("should not break one log by line"));
-        topic3.add(Grade.from(0.5), new RequirementName("should have relevant id data"));
-        topic3.add(Grade.from(0.3), new RequirementName("should have trace id"));
+        topic3.add(Requirement.create(Grade.from(0.7), new RequirementName("should not break one log by line")));
+        topic3.add(Requirement.create(Grade.from(0.5), new RequirementName("should have relevant id data")));
+        topic3.add(Requirement.create(Grade.from(0.3), new RequirementName("should have trace id")));
         theme2.add(topic3);
         checklist.add(theme2);
 

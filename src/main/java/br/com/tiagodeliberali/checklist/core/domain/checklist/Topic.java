@@ -37,10 +37,6 @@ public class Topic extends NodeInfo<Requirement> implements CalculableEntity, We
         return service.getAnswer(name).map(x -> getGrade(x)).orElse(Grade.MIN);
     }
 
-    public void add(Grade grade, RequirementName name) throws EntityAlreadyExistException {
-        add(Requirement.create(grade, name));
-    }
-
     private Grade getGrade(Answer answer) {
         Grade grade = Grade.MAX;
         Iterator<EntityId> iterator = answer.getIterator();

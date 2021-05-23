@@ -4,6 +4,7 @@ import br.com.tiagodeliberali.checklist.core.domain.Grade;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.Checklist;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.EntityAlreadyExistException;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.EntityId;
+import br.com.tiagodeliberali.checklist.core.domain.checklist.Requirement;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.RequirementName;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.Theme;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.ThemeName;
@@ -37,9 +38,9 @@ public class FileMapper {
 
                 topicJson.getRequirements().forEach(requirementJson -> {
                     try {
-                        topic.add(
+                        topic.add(Requirement.create(
                                 Grade.from(requirementJson.getGrade()),
-                                new RequirementName(requirementJson.getName()));
+                                new RequirementName(requirementJson.getName())));
                     } catch (EntityAlreadyExistException e) {
                         logger.warn("[LoadChecklistDisk] " + e.getMessage());
                     }

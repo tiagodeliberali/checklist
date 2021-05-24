@@ -5,6 +5,7 @@ import br.com.tiagodeliberali.checklist.core.domain.checklist.TopicName;
 import lombok.Getter;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
 
@@ -36,6 +37,10 @@ public class ServiceInfo {
 
     public int count() {
         return answers.size();
+    }
+
+    public Iterator<EntityId> getIterator() {
+        return answers.keySet().iterator();
     }
 
     public Optional<Answer> getAnswer(EntityId id) {

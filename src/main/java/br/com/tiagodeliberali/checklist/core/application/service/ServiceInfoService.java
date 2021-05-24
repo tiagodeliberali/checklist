@@ -2,11 +2,11 @@ package br.com.tiagodeliberali.checklist.core.application.service;
 
 import br.com.tiagodeliberali.checklist.core.application.port.in.ManipulateServiceInfoUseCase;
 import br.com.tiagodeliberali.checklist.core.application.port.out.FailedToLoadException;
+import br.com.tiagodeliberali.checklist.core.application.port.out.FailedToSaveException;
 import br.com.tiagodeliberali.checklist.core.application.port.out.LoadServiceInfoPort;
 import br.com.tiagodeliberali.checklist.core.application.port.out.SaveServiceInfoPort;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.EntityAlreadyExistException;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.EntityId;
-import br.com.tiagodeliberali.checklist.core.domain.checklist.EntityNotFoundException;
 import br.com.tiagodeliberali.checklist.core.domain.service.ServiceInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +30,7 @@ public class ServiceInfoService implements ManipulateServiceInfoUseCase {
     }
 
     @Override
-    public void create(String repo) throws EntityAlreadyExistException {
+    public void create(String repo) throws EntityAlreadyExistException, FailedToSaveException {
         try {
             ServiceInfo service = loadServiceInfoPort.load(repo);
 
@@ -46,7 +46,7 @@ public class ServiceInfoService implements ManipulateServiceInfoUseCase {
     }
 
     @Override
-    public void addTopic(String repo, String topicId) throws FailedToLoadException {
+    public void addTopic(String repo, String topicId) throws FailedToLoadException, FailedToSaveException {
         ServiceInfo service = loadServiceInfoPort.load(repo);
         service.addTopic(new EntityId(topicId));
         saveServiceInfoPort.save(service);
@@ -54,7 +54,7 @@ public class ServiceInfoService implements ManipulateServiceInfoUseCase {
 
     @Override
     public void addRequirement(String repo, String topicId, String requirementId)
-            throws FailedToLoadException {
+            throws FailedToLoadException, FailedToSaveException {
         ServiceInfo service = loadServiceInfoPort.load(repo);
         service.addRequirement(new EntityId(topicId), new EntityId(requirementId));
         saveServiceInfoPort.save(service);

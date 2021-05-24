@@ -27,7 +27,7 @@ class ChecklistTests {
     @Test
     void calculate_grade_without_missing_requirements_gets_max_grade() throws EntityAlreadyExistException {
         Checklist checklist = buildChecklist();
-        
+
         ServiceInfo service = ServiceInfo.create("crm-pwa");
         service.addTopic(EntityId.from(new TopicName("testability")));
         service.addTopic(EntityId.from(new TopicName("database migration")));
@@ -44,9 +44,12 @@ class ChecklistTests {
         Checklist checklist = buildChecklist();
 
         ServiceInfo service = ServiceInfo.create("crm-pwa");
-        service.addRequirement(EntityId.from(new TopicName("testability")), EntityId.from(new RequirementName("should have manual tests description")));
-        service.addRequirement(EntityId.from(new TopicName("kibana log")), EntityId.from(new RequirementName("should have relevant name data")));
-        service.addRequirement(EntityId.from(new TopicName("kibana log")), EntityId.from(new RequirementName("should have trace name")));
+        service.addRequirement(EntityId.from(new TopicName("testability")),
+                EntityId.from(new RequirementName("should have manual tests description")));
+        service.addRequirement(EntityId.from(new TopicName("kibana log")),
+                EntityId.from(new RequirementName("should have relevant name data")));
+        service.addRequirement(EntityId.from(new TopicName("kibana log")),
+                EntityId.from(new RequirementName("should have trace name")));
 
         // act
         Grade grade = checklist.calculate(service);

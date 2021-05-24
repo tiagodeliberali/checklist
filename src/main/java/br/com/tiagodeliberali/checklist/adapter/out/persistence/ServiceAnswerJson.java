@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 public class ServiceAnswerJson {
-    private String topicName;
+    private String topicId;
     private List<String> missedRequirements;
 
     public ServiceAnswerJson() {

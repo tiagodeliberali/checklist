@@ -14,6 +14,8 @@ import br.com.tiagodeliberali.checklist.core.domain.service.ServiceInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 public class FileMapper {
     private static final Logger logger = LoggerFactory.getLogger(LoadChecklistPortDisk.class);
 
@@ -54,12 +56,18 @@ public class FileMapper {
     public static ServiceInfo from(ServiceJson json) {
         ServiceInfo serviceInfo = ServiceInfo.create(json.getRepo());
 
-        json.getAnswers().forEach(answerJson -> answerJson
-                .getMissedRequirements()
-                .forEach(requirement -> serviceInfo
+        json.getAnswers().forEach(answerJson -> {
+            List<String> missedRequirements = answerJson.getMissedRequirements();
+
+            if (missedRequirements.size() > 0) {
+                missedRequirements.forEach(requirement -> serviceInfo
                         .addRequirement(
-                                new EntityId(answerJson.getTopicName()),
-                                EntityId.from(new RequirementName(requirement)))));
+                                new EntityId(answerJson.getTopicId()),
+                                new EntityId(requirement)));
+            } else {
+                serviceInfo.addTopic(new EntityId(answerJson.getTopicId()));
+            }
+        });
 
         return serviceInfo;
     }
@@ -92,6 +100,24 @@ public class FileMapper {
                 });
 
             });
+
+        });
+
+        return json;
+    }
+
+    public static ServiceJson from(ServiceInfo serviceInfo) {
+        ServiceJson json = new ServiceJson();
+        json.setRepo(serviceInfo.getRepo());
+
+        serviceInfo.getIterator().forEachRemaining(topicId -> {
+            ServiceAnswerJson answerJson = new ServiceAnswerJson();
+            answerJson.setTopicId(topicId.id());
+            json.getAnswers().add(answerJson);
+
+            serviceInfo.getAnswer(topicId).ifPresent(answer ->
+                    answer.getIterator().forEachRemaining(requirementId ->
+                            answerJson.getMissedRequirements().add(requirementId.id())));
 
         });
 

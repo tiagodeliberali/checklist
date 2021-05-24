@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -62,11 +63,16 @@ public class ServiceGrade {
                                         requirement.getName().name(),
                                         requirement.getGrade().grade().doubleValue())));
 
+                topicInfo.getUnusedRequirements().sort(Comparator.comparingDouble(x -> -x.getGrade()));
+                topicInfo.getMissedRequirements().sort(Comparator.comparingDouble(x -> -x.getGrade()));
                 themeInfo.getTopicsInfo().add(topicInfo);
             });
 
+            themeInfo.getTopicsInfo().sort(Comparator.comparingInt(x -> -x.getWeight()));
             serviceGrade.getThemesInfo().add(themeInfo);
         });
+
+        serviceGrade.getThemesInfo().sort(Comparator.comparingInt(x -> -x.getWeight()));
 
         return serviceGrade;
     }

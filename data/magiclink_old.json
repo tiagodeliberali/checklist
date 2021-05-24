@@ -1,0 +1,12 @@
+{
+  "repo": "crm-pwa",
+  "answers": [
+    {
+      "topicName": "Testabilidade",
+      "missedRequirements": [
+        "faltam testes de integração",
+        "falta meta de coverage"
+      ]
+    }
+  ]
+}

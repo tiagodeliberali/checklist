@@ -1,12 +1,15 @@
 {
-  "repo": "crm-pwa",
+  "repo": "magiclink",
   "answers": [
     {
-      "topicName": "Testabilidade",
+      "topicId": "healt--793568668",
       "missedRequirements": [
-        "faltam testes de integração",
-        "falta meta de coverage"
+        "kafka--1745768955"
       ]
+    },
+    {
+      "topicId": "testa-1122594481",
+      "missedRequirements": []
     }
   ]
 }

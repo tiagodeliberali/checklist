@@ -2,14 +2,17 @@
   "name": "service checklist",
   "themes": [
     {
+      "id": "scala",
       "name": "scalability",
       "weight": 3,
       "topics": [
         {
+          "id": "test-1234",
           "name": "testability",
           "weight": 3,
           "requirements": [
             {
+              "id": "should-1234",
               "name": "should have unit tests",
               "grade": 0.25
             }

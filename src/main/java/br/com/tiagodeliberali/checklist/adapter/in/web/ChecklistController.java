@@ -1,5 +1,7 @@
 package br.com.tiagodeliberali.checklist.adapter.in.web;
 
+import br.com.tiagodeliberali.checklist.adapter.out.persistence.ChecklistJson;
+import br.com.tiagodeliberali.checklist.adapter.out.persistence.FileMapper;
 import br.com.tiagodeliberali.checklist.core.application.port.out.FailedToLoadException;
 import br.com.tiagodeliberali.checklist.core.application.port.out.FailedToSaveException;
 import br.com.tiagodeliberali.checklist.core.application.service.ChecklistService;
@@ -21,9 +23,9 @@ public class ChecklistController {
     }
 
     @GetMapping(path = "/checklist/{name}")
-    public ChecklistResource getChecklist(@PathVariable("name") String name) throws FailedToLoadException {
+    public ChecklistJson getChecklist(@PathVariable("name") String name) throws FailedToLoadException {
         Checklist checklist = checklistService.loadChecklist(name);
-        return ResourceMapper.from(checklist);
+        return FileMapper.from(checklist);
     }
 
     @PutMapping(path = "/checklist/{name}")

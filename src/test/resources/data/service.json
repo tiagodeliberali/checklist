@@ -2,9 +2,9 @@
   "repo": "us-tasks",
   "answers": [
     {
-      "topicName": "testability",
+      "topicId": "test-1234",
       "missedRequirements": [
-        "should have unit tests"
+        "should-1234"
       ]
     }
   ]

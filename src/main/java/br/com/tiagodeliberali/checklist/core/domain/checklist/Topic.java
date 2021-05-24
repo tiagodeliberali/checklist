@@ -23,8 +23,18 @@ public class Topic extends NodeInfo<Requirement> implements CalculableEntity, We
         id = EntityId.from(name);
     }
 
+    private Topic(EntityId id, TopicName name, int weight) {
+        this.name = name;
+        this.weight = weight;
+        this.id = id;
+    }
+
     public static Topic create(TopicName name, int weight) {
         return new Topic(name, weight);
+    }
+
+    public static Topic load(String id, String name, int weight) {
+        return new Topic(new EntityId(id), new TopicName(name), weight);
     }
 
     @Override

@@ -29,20 +29,20 @@ class ServiceGradeTests {
 
         Theme theme1 = Theme.create(new ThemeName("scalability"), 1);
         Topic topic1 = Topic.create(new TopicName("topic1"), 1);
-        topic1.add(Requirement.create(Grade.from(0.5), new RequirementName("req1")));
-        topic1.add(Requirement.create(Grade.from(0.5), new RequirementName("req2")));
+        topic1.add(Requirement.create(new RequirementName("req1"), Grade.from(0.5)));
+        topic1.add(Requirement.create(new RequirementName("req2"), Grade.from(0.5)));
         theme1.add(topic1);
 
         Topic topic2 = Topic.create(new TopicName("topic2"), 1);
-        topic2.add(Requirement.create(Grade.from(0.5), new RequirementName("req3")));
+        topic2.add(Requirement.create(new RequirementName("req3"), Grade.from(0.5)));
         theme1.add(topic2);
         checklist.add(theme1);
 
         Theme theme2 = Theme.create(new ThemeName("monitoring"), 1);
         Topic topic3 = Topic.create(new TopicName("topic3"), 1);
-        topic3.add(Requirement.create(Grade.from(0.5), new RequirementName("req4")));
-        topic3.add(Requirement.create(Grade.from(0.5), new RequirementName("req5")));
-        topic3.add(Requirement.create(Grade.from(0.5), new RequirementName("req6")));
+        topic3.add(Requirement.create(new RequirementName("req4"), Grade.from(0.5)));
+        topic3.add(Requirement.create(new RequirementName("req5"), Grade.from(0.5)));
+        topic3.add(Requirement.create(new RequirementName("req6"), Grade.from(0.5)));
         theme2.add(topic3);
         checklist.add(theme2);
 

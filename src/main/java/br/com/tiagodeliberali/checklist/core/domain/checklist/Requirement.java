@@ -17,8 +17,18 @@ public class Requirement implements CalculableEntity {
         id = EntityId.from(name);
     }
 
-    public static Requirement create(Grade grade, RequirementName name) {
+    public Requirement(EntityId id, RequirementName name, Grade grade) {
+        this.name = name;
+        this.grade = grade;
+        this.id = id;
+    }
+
+    public static Requirement create(RequirementName name, Grade grade) {
         return new Requirement(name, grade);
+    }
+
+    public static Requirement load(String id, String name, double grade) {
+        return new Requirement(new EntityId(id), new RequirementName(name), Grade.from(grade));
     }
 
     @Override

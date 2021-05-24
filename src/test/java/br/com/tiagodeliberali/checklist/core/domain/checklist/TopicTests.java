@@ -23,7 +23,7 @@ class TopicTests {
     void add_requirement_to_topic() throws EntityAlreadyExistException {
         Topic topic = Topic.create(new TopicName("testability"), 5);
 
-        topic.add(Requirement.create(Grade.from(0.25), new RequirementName("description one")));
+        topic.add(Requirement.create(new RequirementName("description one"), Grade.from(0.25)));
 
         assertThat(topic.getMaxLoss()).isEqualTo(Grade.from(0.25));
         assertThat(topic.count()).isEqualTo(1);
@@ -75,9 +75,9 @@ class TopicTests {
 
     private Topic createTopic() throws EntityAlreadyExistException {
         Topic topic = Topic.create(new TopicName("testability"), 10);
-        topic.add(Requirement.create(Grade.from(0.5), new RequirementName("description one")));
-        topic.add(Requirement.create(Grade.from(0.4), new RequirementName("another description")));
-        topic.add(Requirement.create(Grade.from(0.3), new RequirementName("third description")));
+        topic.add(Requirement.create(new RequirementName("description one"), Grade.from(0.5)));
+        topic.add(Requirement.create(new RequirementName("another description"), Grade.from(0.4)));
+        topic.add(Requirement.create(new RequirementName("third description"), Grade.from(0.3)));
 
         return topic;
     }

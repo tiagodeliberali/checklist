@@ -52,15 +52,15 @@ class ThemeTests {
         Theme theme = Theme.create(new ThemeName("scalability"), 10);
 
         Topic topic1 = Topic.create(new TopicName("testability"), 5);
-        topic1.add(Requirement.create(Grade.from(0.2), new RequirementName("missing manual tests doc")));
-        topic1.add(Requirement.create(Grade.from(0.4), new RequirementName("no unit tests")));
-        topic1.add(Requirement.create(Grade.from(0.8), new RequirementName("not in ci/cd")));
+        topic1.add(Requirement.create(new RequirementName("missing manual tests doc"), Grade.from(0.2)));
+        topic1.add(Requirement.create(new RequirementName("no unit tests"), Grade.from(0.4)));
+        topic1.add(Requirement.create(new RequirementName("not in ci/cd"), Grade.from(0.8)));
 
         theme.add(topic1);
 
         Topic topic2 = Topic.create(new TopicName("health check"), 2);
-        topic2.add(Requirement.create(Grade.from(0.3), new RequirementName("not validating database")));
-        topic2.add(Requirement.create(Grade.from(0.6), new RequirementName("not validating sqs")));
+        topic2.add(Requirement.create(new RequirementName("not validating database"), Grade.from(0.3)));
+        topic2.add(Requirement.create(new RequirementName("not validating sqs"), Grade.from(0.6)));
 
         theme.add(topic2);
 

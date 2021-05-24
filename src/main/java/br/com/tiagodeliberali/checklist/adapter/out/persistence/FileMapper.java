@@ -19,11 +19,11 @@ import java.util.List;
 public class FileMapper {
     private static final Logger logger = LoggerFactory.getLogger(LoadChecklistPortDisk.class);
 
-    public static Checklist from(ChecklistJson json) {
+    public static Checklist fromReliableSource(ChecklistJson json) {
         Checklist checklist = Checklist.create(json.getName());
 
         json.getThemes().forEach(themeJson -> {
-            Theme theme = Theme.create(new ThemeName(themeJson.getName()), themeJson.getWeight());
+            Theme theme = Theme.load(themeJson.getId(), themeJson.getName(), themeJson.getWeight());
             try {
                 checklist.add(theme);
             } catch (EntityAlreadyExistException e) {
@@ -31,7 +31,7 @@ public class FileMapper {
             }
 
             themeJson.getTopics().forEach(topicJson -> {
-                Topic topic = Topic.create(new TopicName(topicJson.getName()), topicJson.getWeight());
+                Topic topic = Topic.load(topicJson.getId(), topicJson.getName(), topicJson.getWeight());
                 try {
                     theme.add(topic);
                 } catch (EntityAlreadyExistException e) {
@@ -40,9 +40,8 @@ public class FileMapper {
 
                 topicJson.getRequirements().forEach(requirementJson -> {
                     try {
-                        topic.add(Requirement.create(
-                                Grade.from(requirementJson.getGrade()),
-                                new RequirementName(requirementJson.getName())));
+                        topic.add(Requirement.load(
+                                requirementJson.getId(), requirementJson.getName(), requirementJson.getGrade()));
                     } catch (EntityAlreadyExistException e) {
                         logger.warn("[LoadChecklistDisk] " + e.getMessage());
                     }

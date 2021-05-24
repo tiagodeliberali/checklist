@@ -20,8 +20,18 @@ public class Theme extends NodeInfo<Topic> implements CalculableEntity, WeightCa
         id = EntityId.from(name);
     }
 
+    private Theme(EntityId id, ThemeName name, int weight) {
+        this.name = name;
+        this.weight = weight;
+        this.id = id;
+    }
+
     public static Theme create(ThemeName name, int weight) {
         return new Theme(name, weight);
+    }
+
+    public static Theme load(String id, String name, int weight) {
+        return new Theme(new EntityId(id), new ThemeName(name), weight);
     }
 
     @Override

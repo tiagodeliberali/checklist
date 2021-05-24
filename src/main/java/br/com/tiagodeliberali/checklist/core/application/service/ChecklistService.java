@@ -1,6 +1,5 @@
 package br.com.tiagodeliberali.checklist.core.application.service;
 
-import br.com.tiagodeliberali.checklist.adapter.out.persistence.LoadChecklistPortDisk;
 import br.com.tiagodeliberali.checklist.core.application.port.in.ManipulateChecklistUseCase;
 import br.com.tiagodeliberali.checklist.core.application.port.out.FailedToLoadException;
 import br.com.tiagodeliberali.checklist.core.application.port.out.FailedToSaveException;
@@ -70,7 +69,7 @@ public class ChecklistService implements ManipulateChecklistUseCase {
         Checklist checklist = loadChecklistPort.load(checklistName);
         checklist.get(new EntityId(themeId))
                 .get(new EntityId(topicId))
-                .add(Requirement.create(Grade.from(grade), new RequirementName(name)));
+                .add(Requirement.create(new RequirementName(name), Grade.from(grade)));
         saveChecklistPort.save(checklist);
     }
 

@@ -30,7 +30,7 @@ public class LoadChecklistPortDisk implements LoadChecklistPort {
             ObjectMapper mapper = new ObjectMapper();
             ChecklistJson json = mapper.readValue(jsonStr, ChecklistJson.class);
 
-            return FileMapper.from(json);
+            return FileMapper.fromReliableSource(json);
         }
         catch (Exception ex) {
             throw new FailedToLoadException(path.toString(), ex);

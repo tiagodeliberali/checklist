@@ -1,9 +1,9 @@
 {
-  "name": "ustasks",
+  "name": "checklist",
   "themes": [
     {
       "id": "estab",
-      "name": "Estabilidade",
+      "name": "estabilidade",
       "weight": 5,
       "topics": [
         {
@@ -44,6 +44,77 @@
           ]
         },
         {
+          "id": "libsa--1426154911",
+          "name": "Libs atualizadas",
+          "weight": 6,
+          "requirements": [
+            {
+              "id": "desat--264921953",
+              "name": "Desatualziadas",
+              "grade": 0.3
+            },
+            {
+              "id": "códig-1731640264",
+              "name": "Código deprecado",
+              "grade": 0.3
+            },
+            {
+              "id": "críti--1801933530",
+              "name": "Críticos e altos",
+              "grade": 0.8
+            },
+            {
+              "id": "médio-117277832",
+              "name": "Médios e baixos",
+              "grade": 0.3
+            },
+            {
+              "id": "forad--449799592",
+              "name": "Fora do padrão",
+              "grade": 0.5
+            }
+          ]
+        },
+        {
+          "id": "segur-616813017",
+          "name": "Segurança",
+          "weight": 6,
+          "requirements": [
+            {
+              "id": "endpo-579620168",
+              "name": "Endpoints abertos",
+              "grade": 1.0
+            },
+            {
+              "id": "chave-1106731526",
+              "name": "Chaves fixas para autenticação",
+              "grade": 0.5
+            },
+            {
+              "id": "keycl--1276938262",
+              "name": "Keycloak ausente",
+              "grade": 0.2
+            },
+            {
+              "id": "opena-903493449",
+              "name": "OpenAPI ausente",
+              "grade": 0.5
+            }
+          ]
+        },
+        {
+          "id": "migra-1151882158",
+          "name": "Migration",
+          "weight": 4,
+          "requirements": [
+            {
+              "id": "nãoex-545117753",
+              "name": "Não existe forma de migration as code",
+              "grade": 1.0
+            }
+          ]
+        },
+        {
           "id": "testa-1122594481",
           "name": "Testabilidade",
           "weight": 10,
@@ -72,6 +143,430 @@
               "id": "integ-685189333",
               "name": "integration tests",
               "grade": 0.3
+            }
+          ]
+        },
+        {
+          "id": "sonar--2084465398",
+          "name": "Sonarqube",
+          "weight": 7,
+          "requirements": [
+            {
+              "id": "assoc--1524671637",
+              "name": "Associação ao projeto",
+              "grade": 1.0
+            },
+            {
+              "id": "issue--1205647628",
+              "name": "Issues ignorados",
+              "grade": 0.8
+            },
+            {
+              "id": "prdes-494030505",
+              "name": "PR desabilitado",
+              "grade": 0.6
+            },
+            {
+              "id": "cover-2066479283",
+              "name": "Coverage desconfigurado",
+              "grade": 0.2
+            },
+            {
+              "id": "bloqu-1971947566",
+              "name": "Bloqueia PR",
+              "grade": 0.2
+            },
+            {
+              "id": "issue-1070484858",
+              "name": "Issues irrelevantes",
+              "grade": 0.4
+            }
+          ]
+        },
+        {
+          "id": "audit--1322996101",
+          "name": "Auditabilidade dos dados",
+          "weight": 5,
+          "requirements": [
+            {
+              "id": "nenhu--637768009",
+              "name": "Nenhuma informação é auditada",
+              "grade": 1.0
+            },
+            {
+              "id": "parte--1403067387",
+              "name": "Parte das informações não são auditadas",
+              "grade": 0.5
+            }
+          ]
+        },
+        {
+          "id": "termi--818598610",
+          "name": "Termination lifecycle",
+          "weight": 5,
+          "requirements": [
+            {
+              "id": "kafka--293506902",
+              "name": "Kafka não é encerrado",
+              "grade": 1.0
+            },
+            {
+              "id": "sqsnã--711004839",
+              "name": "SQS não é encerrado",
+              "grade": 0.3
+            },
+            {
+              "id": "podmo-1211124190",
+              "name": "Pod morto pelo kubernetes",
+              "grade": 0.3
+            },
+            {
+              "id": "webso--388982760",
+              "name": "Web sockets não é encerrado",
+              "grade": 0.3
+            }
+          ]
+        },
+        {
+          "id": "ambie-761662138",
+          "name": "Ambiente de desenvolvimento",
+          "weight": 1,
+          "requirements": [
+            {
+              "id": "difer--191588833",
+              "name": "Difere completamente de prod",
+              "grade": 0.8
+            },
+            {
+              "id": "nãoex--1343320839",
+              "name": "Não existe ambiente",
+              "grade": 1.0
+            },
+            {
+              "id": "integ-533597773",
+              "name": "Integraçãop entre sistemas não funciona",
+              "grade": 0.5
+            },
+            {
+              "id": "mensa--2135637450",
+              "name": "Mensagens não tem estrutura",
+              "grade": 0.3
+            },
+            {
+              "id": "dados-531069774",
+              "name": "Dados de qualidade",
+              "grade": 0.5
+            },
+            {
+              "id": "docum--119515669",
+              "name": "Documentaçã de configuração ausente",
+              "grade": 0.7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "monit",
+      "name": "monitoramento",
+      "weight": 4,
+      "topics": [
+        {
+          "id": "traci--177697206",
+          "name": "Tracing distribuído",
+          "weight": 2,
+          "requirements": [
+            {
+              "id": "libde-625073473",
+              "name": "Lib de tracing não está no projeto",
+              "grade": 1.0
+            },
+            {
+              "id": "mensa-212623670",
+              "name": "Mensagens enviadas não tem trace id",
+              "grade": 0.4
+            },
+            {
+              "id": "spann-1468460094",
+              "name": "Span não foi adicionado à trechos relevantes",
+              "grade": 0.2
+            },
+            {
+              "id": "httpr-1930380836",
+              "name": "HTTP requests não tem trace id",
+              "grade": 0.4
+            }
+          ]
+        },
+        {
+          "id": "logki--1350797869",
+          "name": "Log no kibana",
+          "weight": 8,
+          "requirements": [
+            {
+              "id": "linha--1817135857",
+              "name": "Linhas quebradas",
+              "grade": 1.0
+            },
+            {
+              "id": "dados--2089577734",
+              "name": "Dados sensíveis",
+              "grade": 0.7
+            },
+            {
+              "id": "ident-1794756419",
+              "name": "Identificação do evento",
+              "grade": 0.8
+            },
+            {
+              "id": "trace-1334883830",
+              "name": "Trace id",
+              "grade": 0.2
+            },
+            {
+              "id": "volum--796695250",
+              "name": "Volume proporcionalmente grande",
+              "grade": 0.3
+            }
+          ]
+        },
+        {
+          "id": "alarm-743231135",
+          "name": "Alarmes",
+          "weight": 10,
+          "requirements": [
+            {
+              "id": "lagno-1927568983",
+              "name": "Lag no Kafka não está no Spoiler",
+              "grade": 0.7
+            },
+            {
+              "id": "tempo--1319974729",
+              "name": "Tempo na fila SQS não está no Spoiler",
+              "grade": 0.7
+            },
+            {
+              "id": "timen-654568393",
+              "name": "Time não tem pré alarmes",
+              "grade": 0.2
+            },
+            {
+              "id": "webso--2066145309",
+              "name": "Web sockets não estão no Spoiler",
+              "grade": 0.5
+            },
+            {
+              "id": "tempo-848278205",
+              "name": "Tempo de resposta não está no Spoiler",
+              "grade": 0.7
+            },
+            {
+              "id": "healt--1919350591",
+              "name": "Healthchecks evitariam chamadas de plantão",
+              "grade": 0.2
+            },
+            {
+              "id": "statu-1044192103",
+              "name": "Status code 500 não estão no spoiler",
+              "grade": 0.7
+            }
+          ]
+        },
+        {
+          "id": "insta--672744018",
+          "name": "Instana",
+          "weight": 1,
+          "requirements": [
+            {
+              "id": "nãopo-393304366",
+              "name": "Não possui instana habilitado",
+              "grade": 1.0
+            }
+          ]
+        },
+        {
+          "id": "prome--1593613046",
+          "name": "Prometheus",
+          "weight": 10,
+          "requirements": [
+            {
+              "id": "métri--1091030847",
+              "name": "Métricas de negócio",
+              "grade": 0.5
+            },
+            {
+              "id": "dashp--72053843",
+              "name": "Dash personalizado",
+              "grade": 0.3
+            },
+            {
+              "id": "libdo-1169785845",
+              "name": "Lib do Prometheus gerando estatísticas do serviço",
+              "grade": 1.0
+            }
+          ]
+        },
+        {
+          "id": "sentr--1822080001",
+          "name": "Sentry",
+          "weight": 5,
+          "requirements": [
+            {
+              "id": "usert--203375131",
+              "name": "User tag",
+              "grade": 0.2
+            },
+            {
+              "id": "erros-138904753",
+              "name": "Erros não agrupados",
+              "grade": 0.5
+            },
+            {
+              "id": "muito--889734690",
+              "name": "Muitos erros não tratados",
+              "grade": 0.6
+            },
+            {
+              "id": "deplo-1820078431",
+              "name": "Deploy associado",
+              "grade": 0.5
+            },
+            {
+              "id": "class-2004159718",
+              "name": "Classe_módulo tag",
+              "grade": 0.2
+            },
+            {
+              "id": "relea-1416789055",
+              "name": "Release associado",
+              "grade": 0.5
+            },
+            {
+              "id": "appta-869164283",
+              "name": "App tag",
+              "grade": 0.2
+            },
+            {
+              "id": "envta-72494535",
+              "name": "Env tag",
+              "grade": 0.2
+            },
+            {
+              "id": "nenhu-376324108",
+              "name": "Nenhum erro chega ao sentry",
+              "grade": 1.0
+            },
+            {
+              "id": "ritua-1586145130",
+              "name": "Ritual para lidar com erros logados",
+              "grade": 0.5
+            },
+            {
+              "id": "libdo--610081511",
+              "name": "Lib do sentry",
+              "grade": 1.0
+            },
+            {
+              "id": "dnsún-1946156426",
+              "name": "DNS único",
+              "grade": 0.5
+            },
+            {
+              "id": "repon-77240257",
+              "name": "Repo não está linkado",
+              "grade": 0.2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "docum",
+      "name": "documentação",
+      "weight": 1,
+      "topics": [
+        {
+          "id": "diagr--546409592",
+          "name": "Diagrama de arquitetura",
+          "weight": 5,
+          "requirements": [
+            {
+              "id": "nãopo--1200342495",
+              "name": "Não possui diagrama de arquitetura",
+              "grade": 1.0
+            },
+            {
+              "id": "diagr--1864858485",
+              "name": "Diagrama de arquittura incompleto",
+              "grade": 0.5
+            }
+          ]
+        },
+        {
+          "id": "endpo-804070247",
+          "name": "Endpoints listados",
+          "weight": 3,
+          "requirements": [
+            {
+              "id": "nãote--2046525667",
+              "name": "Não tem documentação dos endpoints",
+              "grade": 1.0
+            },
+            {
+              "id": "docum-457921287",
+              "name": "Documentação dos endpoints incompleta",
+              "grade": 0.5
+            }
+          ]
+        },
+        {
+          "id": "fluxo-928710475",
+          "name": "Fluxo básico da aplicação",
+          "weight": 4,
+          "requirements": [
+            {
+              "id": "nãopo--816527187",
+              "name": "Não possui descrição do fluxo",
+              "grade": 1.0
+            },
+            {
+              "id": "descr--548615571",
+              "name": "Descriçã do fluxo incompleta",
+              "grade": 0.5
+            }
+          ]
+        },
+        {
+          "id": "resum--1638186343",
+          "name": "Resumo no github",
+          "weight": 10,
+          "requirements": [
+            {
+              "id": "nãopo--265632224",
+              "name": "Não possui resumo no github",
+              "grade": 1.0
+            },
+            {
+              "id": "resum--1329903856",
+              "name": "Resumo no github incompleto ou errado",
+              "grade": 0.5
+            }
+          ]
+        },
+        {
+          "id": "faq-69366",
+          "name": "FAQ",
+          "weight": 1,
+          "requirements": [
+            {
+              "id": "falta--1467691941",
+              "name": "Faltam temas relevantes na FAQ",
+              "grade": 0.5
+            },
+            {
+              "id": "nãote--346329204",
+              "name": "Não tem FAQ",
+              "grade": 1.0
             }
           ]
         }

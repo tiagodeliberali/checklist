@@ -47,9 +47,9 @@ class ServiceGradeTests {
         checklist.add(theme2);
 
         ServiceInfo service = ServiceInfo.create("crm-pwa");
-        service.addRequirement(new TopicName("topic1"), EntityId.from(new RequirementName("req1")));
-        service.addRequirement(new TopicName("topic3"), EntityId.from(new RequirementName("req5")));
-        service.addRequirement(new TopicName("topic3"), EntityId.from(new RequirementName("req6")));
+        service.addRequirement(EntityId.from(new TopicName("topic1")), EntityId.from(new RequirementName("req1")));
+        service.addRequirement(EntityId.from(new TopicName("topic3")), EntityId.from(new RequirementName("req5")));
+        service.addRequirement(EntityId.from(new TopicName("topic3")), EntityId.from(new RequirementName("req6")));
 
         // act
         ServiceGrade serviceGrade = ServiceGrade.build(checklist, service);

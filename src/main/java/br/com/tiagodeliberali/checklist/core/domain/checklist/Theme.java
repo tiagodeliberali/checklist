@@ -38,7 +38,7 @@ public class Theme extends NodeInfo<Topic> implements CalculableEntity, WeightCa
         Set<Requirement> unusedRequirements = new HashSet<>();
 
         for (Topic topic : nodes.values()) {
-            service.getAnswer(topic.getName())
+            service.getAnswer(topic.getId())
                     .map(topic::getUnusedRequirements)
                     .ifPresent(unusedRequirements::addAll);
         }

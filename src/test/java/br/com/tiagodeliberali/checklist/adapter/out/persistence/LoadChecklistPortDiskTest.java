@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class LoadChecklistDiskTest {
+class LoadChecklistPortDiskTest {
     @Test
     void load_json() throws FailedToLoadException {
-        LoadChecklistDisk loadChecklist = new LoadChecklistDisk("src/test/resources/data/");
+        LoadChecklistPortDisk loadChecklist = new LoadChecklistPortDisk("src/test/resources/data/");
 
         Checklist checklist = loadChecklist.load("checklist");
 

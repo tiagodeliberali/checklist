@@ -11,7 +11,7 @@ import java.util.Optional;
 public class ServiceInfo {
     @Getter
     private final String repo;
-    private final Map<TopicName, Answer> answers;
+    private final Map<EntityId, Answer> answers;
 
     private ServiceInfo(String repo) {
         this.repo = repo;
@@ -22,23 +22,23 @@ public class ServiceInfo {
         return new ServiceInfo(repo);
     }
 
-    public void addTopic(TopicName topicName) {
-        if (!answers.containsKey(topicName)) {
-            answers.put(topicName, Answer.create());
+    public void addTopic(EntityId topicId) {
+        if (!answers.containsKey(topicId)) {
+            answers.put(topicId, Answer.create());
         }
     }
 
-    public void addRequirement(TopicName topicName, EntityId requirementId) {
-        addTopic(topicName);
+    public void addRequirement(EntityId topicId, EntityId requirementId) {
+        addTopic(topicId);
 
-        answers.get(topicName).addMissingRequirement(requirementId);
+        answers.get(topicId).addMissingRequirement(requirementId);
     }
 
     public int count() {
         return answers.size();
     }
 
-    public Optional<Answer> getAnswer(TopicName id) {
+    public Optional<Answer> getAnswer(EntityId id) {
         return Optional.ofNullable(answers.get(id));
     }
 }

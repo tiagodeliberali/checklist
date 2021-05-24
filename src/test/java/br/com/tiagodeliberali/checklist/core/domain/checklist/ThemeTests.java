@@ -42,9 +42,9 @@ class ThemeTests {
 
     private ServiceInfo createService() {
         ServiceInfo service = ServiceInfo.create("us-tasks");
-        service.addRequirement(new TopicName("testability"), EntityId.from(new RequirementName("missing manual tests doc")));
-        service.addRequirement(new TopicName("testability"), EntityId.from(new RequirementName("no unit tests")));
-        service.addRequirement(new TopicName("health check"), EntityId.from(new RequirementName("not validating database")));
+        service.addRequirement(EntityId.from(new TopicName("testability")), EntityId.from(new RequirementName("missing manual tests doc")));
+        service.addRequirement(EntityId.from(new TopicName("testability")), EntityId.from(new RequirementName("no unit tests")));
+        service.addRequirement(EntityId.from(new TopicName("health check")), EntityId.from(new RequirementName("not validating database")));
         return service;
     }
 

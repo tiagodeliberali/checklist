@@ -38,7 +38,7 @@ public class ServiceGrade {
 
             theme.getIterator().forEachRemaining(topic -> {
                 ServiceTopicInfo topicInfo = new ServiceTopicInfo();
-                Grade topicGrade = service.getAnswer(topic.getName())
+                Grade topicGrade = service.getAnswer(topic.getId())
                         .map(answer -> topic.calculate(service))
                         .orElse(Grade.MIN);
 
@@ -46,7 +46,7 @@ public class ServiceGrade {
                 topicInfo.setWeight(topic.getWeight());
                 topicInfo.setName(topic.getName().name());
 
-                service.getAnswer(topic.getName())
+                service.getAnswer(topic.getId())
                         .map(topic::getUnusedRequirements)
                         .orElse(topic.getUnusedRequirements(Answer.create()))
                         .forEach(requirement -> topicInfo
@@ -54,7 +54,7 @@ public class ServiceGrade {
                                         requirement.getName().name(),
                                         requirement.getGrade().grade().doubleValue())));
 
-                service.getAnswer(topic.getName())
+                service.getAnswer(topic.getId())
                         .map(topic::getRequirements)
                         .orElse(new HashSet<>())
                         .forEach(requirement -> topicInfo

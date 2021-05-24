@@ -13,11 +13,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Component
-public class LoadChecklistDisk implements LoadChecklistPort {
+public class LoadChecklistPortDisk implements LoadChecklistPort {
     private final String folderPath;
 
     @Autowired
-    public LoadChecklistDisk(@Value("${folder.path}") String folderPath) {
+    public LoadChecklistPortDisk(@Value("${folder.path}") String folderPath) {
         this.folderPath = folderPath;
     }
 

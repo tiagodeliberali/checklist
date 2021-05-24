@@ -1,6 +1,8 @@
 package br.com.tiagodeliberali.checklist.adapter.in.web;
 
 import br.com.tiagodeliberali.checklist.core.application.port.out.FailedToLoadException;
+import br.com.tiagodeliberali.checklist.core.application.port.out.FailedToSaveException;
+import br.com.tiagodeliberali.checklist.core.domain.checklist.EntityAlreadyExistException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.hateoas.mediatype.problem.Problem;
@@ -47,6 +49,26 @@ public class ControllerExceptionHandler {
         return Problem.create()
                 .withType(getTypeUri("failed-to-load"))
                 .withTitle("Failed to load resource")
+                .withDetail(e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(EntityAlreadyExistException.class)
+    @ResponseBody
+    Problem handleEntityAlreadyExistException(EntityAlreadyExistException e) {
+        return Problem.create()
+                .withType(getTypeUri("checklist-already-exists"))
+                .withTitle("Cannot create another checklist with the same name.")
+                .withDetail(e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_GATEWAY)
+    @ExceptionHandler(FailedToSaveException.class)
+    @ResponseBody
+    Problem handleFailedToSaveException(FailedToSaveException e) {
+        return Problem.create()
+                .withType(getTypeUri("fail-to-save"))
+                .withTitle("Cannot save entity.")
                 .withDetail(e.getMessage());
     }
 

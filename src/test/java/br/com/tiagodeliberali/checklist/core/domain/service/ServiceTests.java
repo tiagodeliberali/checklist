@@ -1,5 +1,6 @@
 package br.com.tiagodeliberali.checklist.core.domain.service;
 
+import br.com.tiagodeliberali.checklist.core.domain.checklist.EntityId;
 import br.com.tiagodeliberali.checklist.core.domain.checklist.TopicName;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,7 @@ class ServiceTests {
     void add_new_topic_missing_requirements_create_if_not_exists() {
         ServiceInfo serviceInfo = ServiceInfo.create("crm-pwa");
 
-        serviceInfo.addTopic(new TopicName("topic name"));
+        serviceInfo.addTopic(new EntityId("topic name"));
 
         assertThat(serviceInfo.count()).isEqualTo(1);
     }

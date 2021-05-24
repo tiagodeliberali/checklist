@@ -34,7 +34,7 @@ public class Topic extends NodeInfo<Requirement> implements CalculableEntity, We
 
     @Override
     public Grade calculate(ServiceInfo service) {
-        return service.getAnswer(name)
+        return service.getAnswer(id)
                 .map(this::getGrade)
                 .orElse(Grade.MIN);
     }

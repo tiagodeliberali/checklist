@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class FileMapper {
-    private static final Logger logger = LoggerFactory.getLogger(LoadChecklistDisk.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoadChecklistPortDisk.class);
 
     public static Checklist from(ChecklistJson json) {
         Checklist checklist = Checklist.create(json.getName());
@@ -58,9 +58,43 @@ public class FileMapper {
                 .getMissedRequirements()
                 .forEach(requirement -> serviceInfo
                         .addRequirement(
-                                new TopicName(answerJson.getTopicName()),
+                                new EntityId(answerJson.getTopicName()),
                                 EntityId.from(new RequirementName(requirement)))));
 
         return serviceInfo;
+    }
+
+    public static ChecklistJson from(Checklist checklist) {
+        ChecklistJson json = new ChecklistJson();
+
+        json.setName(checklist.getName());
+
+        checklist.getIterator().forEachRemaining(theme -> {
+            ChecklistThemeJson themeJson = new ChecklistThemeJson();
+            themeJson.setId(theme.getId().id());
+            themeJson.setName(theme.getName().name());
+            themeJson.setWeight(theme.getWeight());
+            json.getThemes().add(themeJson);
+
+            theme.getIterator().forEachRemaining(topic -> {
+                ChecklistTopicJson topicJson = new ChecklistTopicJson();
+                topicJson.setId(topic.getId().id());
+                topicJson.setName(topic.getName().name());
+                topicJson.setWeight(topic.getWeight());
+                themeJson.getTopics().add(topicJson);
+
+                topic.getIterator().forEachRemaining(requirement -> {
+                    ChecklistRequirementJson requirementJson = new ChecklistRequirementJson();
+                    requirementJson.setId(requirement.getId().id());
+                    requirementJson.setName(requirement.getName().name());
+                    requirementJson.setGrade(requirement.getGrade().grade().doubleValue());
+                    topicJson.getRequirements().add(requirementJson);
+                });
+
+            });
+
+        });
+
+        return json;
     }
 }

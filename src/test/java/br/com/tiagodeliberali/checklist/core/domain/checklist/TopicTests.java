@@ -45,9 +45,9 @@ class TopicTests {
 
         ServiceInfo service = ServiceInfo.create("test");
         service.addRequirement(
-                new TopicName("testability"), EntityId.from(new RequirementName("third description")));
+                EntityId.from(new TopicName("testability")), EntityId.from(new RequirementName("third description")));
         service.addRequirement(
-                new TopicName("testability"), EntityId.from(new RequirementName("another description")));
+                EntityId.from(new TopicName("testability")), EntityId.from(new RequirementName("another description")));
 
         Grade grade = topic.calculate(service);
 

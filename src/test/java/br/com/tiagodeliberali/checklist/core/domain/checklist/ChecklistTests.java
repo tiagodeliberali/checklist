@@ -29,9 +29,9 @@ class ChecklistTests {
         Checklist checklist = buildChecklist();
         
         ServiceInfo service = ServiceInfo.create("crm-pwa");
-        service.addTopic(new TopicName("testability"));
-        service.addTopic(new TopicName("database migration"));
-        service.addTopic(new TopicName("kibana log"));
+        service.addTopic(EntityId.from(new TopicName("testability")));
+        service.addTopic(EntityId.from(new TopicName("database migration")));
+        service.addTopic(EntityId.from(new TopicName("kibana log")));
 
         Grade grade = checklist.calculate(service);
 
@@ -44,9 +44,9 @@ class ChecklistTests {
         Checklist checklist = buildChecklist();
 
         ServiceInfo service = ServiceInfo.create("crm-pwa");
-        service.addRequirement(new TopicName("testability"), EntityId.from(new RequirementName("should have manual tests description")));
-        service.addRequirement(new TopicName("kibana log"), EntityId.from(new RequirementName("should have relevant name data")));
-        service.addRequirement(new TopicName("kibana log"), EntityId.from(new RequirementName("should have trace name")));
+        service.addRequirement(EntityId.from(new TopicName("testability")), EntityId.from(new RequirementName("should have manual tests description")));
+        service.addRequirement(EntityId.from(new TopicName("kibana log")), EntityId.from(new RequirementName("should have relevant name data")));
+        service.addRequirement(EntityId.from(new TopicName("kibana log")), EntityId.from(new RequirementName("should have trace name")));
 
         // act
         Grade grade = checklist.calculate(service);

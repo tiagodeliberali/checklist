@@ -9,6 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 public class ChecklistThemeJson {
+    private String id;
     private String name;
     private int weight;
     private List<ChecklistTopicJson> topics;

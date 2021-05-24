@@ -3,7 +3,7 @@
   "themes": [
     {
       "id": "estab",
-      "name": "estabilidade",
+      "name": "Estabilidade",
       "weight": 5,
       "topics": [
         {
@@ -13,32 +13,32 @@
           "requirements": [
             {
               "id": "kafka--1745768955",
-              "name": "kafka client",
+              "name": "Não possui health check para cliente Kafka",
               "grade": 0.2
             },
             {
               "id": "mongo--882835337",
-              "name": "mongo client",
+              "name": "Não possui health check para cliente Mongo",
               "grade": 0.2
             },
             {
               "id": "cassa--487325405",
-              "name": "cassandra client",
+              "name": "Não possui health check para cliente Cassandra",
               "grade": 0.2
             },
             {
               "id": "redis-1578722832",
-              "name": "redis client",
+              "name": "Não possui health check para cliente Redis",
               "grade": 0.2
             },
             {
               "id": "sqscl-624186486",
-              "name": "sqs client",
+              "name": "Não possui health check para cliente SQS",
               "grade": 0.2
             },
             {
               "id": "postg-104685138",
-              "name": "postgres client",
+              "name": "Não possui health check para cliente Postgres",
               "grade": 0.2
             }
           ]
@@ -50,27 +50,27 @@
           "requirements": [
             {
               "id": "desat--264921953",
-              "name": "Desatualziadas",
+              "name": "As libs estão deatualizadas",
               "grade": 0.3
             },
             {
-              "id": "códig-1731640264",
-              "name": "Código deprecado",
+              "id": "codig-1731640264",
+              "name": "Possui código deprecado que precisa ser removido",
               "grade": 0.3
             },
             {
-              "id": "críti--1801933530",
-              "name": "Críticos e altos",
+              "id": "criti--1801933530",
+              "name": "Possui libs com falhas de segurança críticas e altas",
               "grade": 0.8
             },
             {
               "id": "médio-117277832",
-              "name": "Médios e baixos",
+              "name": "Possui libs com falhas de segurança médias e baixas",
               "grade": 0.3
             },
             {
               "id": "forad--449799592",
-              "name": "Fora do padrão",
+              "name": "As libs usadas estão fora do padrão da empresa",
               "grade": 0.5
             }
           ]
@@ -82,7 +82,7 @@
           "requirements": [
             {
               "id": "endpo-579620168",
-              "name": "Endpoints abertos",
+              "name": "Endpoints abertos que deveriam estar fechados",
               "grade": 1.0
             },
             {
@@ -92,12 +92,12 @@
             },
             {
               "id": "keycl--1276938262",
-              "name": "Keycloak ausente",
+              "name": "Não está usando o Keycloak para autenticação",
               "grade": 0.2
             },
             {
               "id": "opena-903493449",
-              "name": "OpenAPI ausente",
+              "name": "Não possui o OpenAPI configurado",
               "grade": 0.5
             }
           ]
@@ -121,27 +121,27 @@
           "requirements": [
             {
               "id": "docum-380051580",
-              "name": "documentação de testes manuais",
+              "name": "Falta documentação dos testes manuais",
               "grade": 0.2
             },
             {
               "id": "unitt-735316101",
-              "name": "unit tests",
+              "name": "Não possui unit tests",
               "grade": 0.3
             },
             {
               "id": "ci_cd-667779397",
-              "name": "ci_cd com testes",
+              "name": "Os testes não fazem parte do ci_cd",
               "grade": 0.8
             },
             {
               "id": "cover--1600388670",
-              "name": "coverage definido",
+              "name": "Não tem coverage definido",
               "grade": 0.1
             },
             {
               "id": "integ-685189333",
-              "name": "integration tests",
+              "name": "Não possui integration tests",
               "grade": 0.3
             }
           ]
@@ -153,32 +153,32 @@
           "requirements": [
             {
               "id": "assoc--1524671637",
-              "name": "Associação ao projeto",
+              "name": "Não existe configuração do Sonarqube associada ao projeto",
               "grade": 1.0
             },
             {
               "id": "issue--1205647628",
-              "name": "Issues ignorados",
+              "name": "Os issues gerados pelo Sonarqube são ignorados",
               "grade": 0.8
             },
             {
               "id": "prdes-494030505",
-              "name": "PR desabilitado",
+              "name": "Os comentários nos PR estão desabilitado",
               "grade": 0.6
             },
             {
               "id": "cover-2066479283",
-              "name": "Coverage desconfigurado",
+              "name": "O coverage está desconfigurado",
               "grade": 0.2
             },
             {
               "id": "bloqu-1971947566",
-              "name": "Bloqueia PR",
+              "name": "Não bloqueia PR's para issues críticos",
               "grade": 0.2
             },
             {
               "id": "issue-1070484858",
-              "name": "Issues irrelevantes",
+              "name": "Existem issues sendo alertados que o time considera irrelevantes",
               "grade": 0.4
             }
           ]
@@ -207,22 +207,22 @@
           "requirements": [
             {
               "id": "kafka--293506902",
-              "name": "Kafka não é encerrado",
+              "name": "Kafka não é encerrado pelo SIGTERM",
               "grade": 1.0
             },
             {
               "id": "sqsnã--711004839",
-              "name": "SQS não é encerrado",
+              "name": "SQS não é encerrado pelo SIGTERM",
               "grade": 0.3
             },
             {
               "id": "podmo-1211124190",
-              "name": "Pod morto pelo kubernetes",
+              "name": "Pod é morto pelo kubernetes e não entende o SIGTERM",
               "grade": 0.3
             },
             {
               "id": "webso--388982760",
-              "name": "Web sockets não é encerrado",
+              "name": "Web sockets não é encerrado pelo SIGTERM",
               "grade": 0.3
             }
           ]
@@ -234,32 +234,32 @@
           "requirements": [
             {
               "id": "difer--191588833",
-              "name": "Difere completamente de prod",
+              "name": "Difere completamente d0 ambiente de prod",
               "grade": 0.8
             },
             {
               "id": "nãoex--1343320839",
-              "name": "Não existe ambiente",
+              "name": "Não existe ambiente de desenvolvimento local",
               "grade": 1.0
             },
             {
               "id": "integ-533597773",
-              "name": "Integraçãop entre sistemas não funciona",
+              "name": "Problemas para testar a integração entre sistemas localmente",
               "grade": 0.5
             },
             {
               "id": "mensa--2135637450",
-              "name": "Mensagens não tem estrutura",
+              "name": "Problema para simular envio de mensagens por sistemas externos",
               "grade": 0.3
             },
             {
               "id": "dados-531069774",
-              "name": "Dados de qualidade",
+              "name": "Faltam dados de qualidade para executar os testes locais",
               "grade": 0.5
             },
             {
               "id": "docum--119515669",
-              "name": "Documentaçã de configuração ausente",
+              "name": "Falta documentação de configuração do ambiente local",
               "grade": 0.7
             }
           ]
@@ -305,27 +305,27 @@
           "requirements": [
             {
               "id": "linha--1817135857",
-              "name": "Linhas quebradas",
+              "name": "Logs estão com as linhas quebradas",
               "grade": 1.0
             },
             {
               "id": "dados--2089577734",
-              "name": "Dados sensíveis",
+              "name": "Existem dados sensíveis sendo logado",
               "grade": 0.7
             },
             {
               "id": "ident-1794756419",
-              "name": "Identificação do evento",
+              "name": "Falta identificação do evento nos logs",
               "grade": 0.8
             },
             {
               "id": "trace-1334883830",
-              "name": "Trace id",
+              "name": "Falta trace id nos logs",
               "grade": 0.2
             },
             {
               "id": "volum--796695250",
-              "name": "Volume proporcionalmente grande",
+              "name": "Volume desnecessariamente grande",
               "grade": 0.3
             }
           ]
@@ -391,17 +391,17 @@
           "requirements": [
             {
               "id": "métri--1091030847",
-              "name": "Métricas de negócio",
+              "name": "Não possui métricas de negócio",
               "grade": 0.5
             },
             {
               "id": "dashp--72053843",
-              "name": "Dash personalizado",
+              "name": "Não possui dash personalizado",
               "grade": 0.3
             },
             {
               "id": "libdo-1169785845",
-              "name": "Lib do Prometheus gerando estatísticas do serviço",
+              "name": "Não possui lib do Prometheus gerando estatísticas do serviço",
               "grade": 1.0
             }
           ]
@@ -413,42 +413,42 @@
           "requirements": [
             {
               "id": "usert--203375131",
-              "name": "User tag",
+              "name": "Não possui User tag",
               "grade": 0.2
             },
             {
               "id": "erros-138904753",
-              "name": "Erros não agrupados",
+              "name": "Os erros estão desagrupados",
               "grade": 0.5
             },
             {
               "id": "muito--889734690",
-              "name": "Muitos erros não tratados",
+              "name": "Muitos erros logados não estão sendo tratados",
               "grade": 0.6
             },
             {
               "id": "deplo-1820078431",
-              "name": "Deploy associado",
+              "name": "Não possui deploy associado",
               "grade": 0.5
             },
             {
               "id": "class-2004159718",
-              "name": "Classe_módulo tag",
+              "name": "Não possui classe_módulo tag",
               "grade": 0.2
             },
             {
               "id": "relea-1416789055",
-              "name": "Release associado",
+              "name": "Não possui release associado",
               "grade": 0.5
             },
             {
               "id": "appta-869164283",
-              "name": "App tag",
+              "name": "Não possui app tag",
               "grade": 0.2
             },
             {
               "id": "envta-72494535",
-              "name": "Env tag",
+              "name": "Não possui env tag",
               "grade": 0.2
             },
             {
@@ -458,22 +458,22 @@
             },
             {
               "id": "ritua-1586145130",
-              "name": "Ritual para lidar com erros logados",
+              "name": "Não tem ritual para lidar com erros logados",
               "grade": 0.5
             },
             {
               "id": "libdo--610081511",
-              "name": "Lib do sentry",
+              "name": "O serviço não possui lib do sentry",
               "grade": 1.0
             },
             {
               "id": "dnsún-1946156426",
-              "name": "DNS único",
+              "name": "Não possui DNS único",
               "grade": 0.5
             },
             {
               "id": "repon-77240257",
-              "name": "Repo não está linkado",
+              "name": "Repo não está linkado no Sentry",
               "grade": 0.2
             }
           ]

@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ServiceInfoService implements ManipulateServiceInfoUseCase {
     private static final Logger logger = LoggerFactory.getLogger(ServiceInfoService.class);
@@ -27,6 +29,11 @@ public class ServiceInfoService implements ManipulateServiceInfoUseCase {
     @Override
     public ServiceInfo loadServiceInfo(String name) throws FailedToLoadException {
         return loadServiceInfoPort.load(name);
+    }
+
+    @Override
+    public List<String> loadAllServicesInfo() throws FailedToLoadException {
+        return loadServiceInfoPort.loadAll();
     }
 
     @Override

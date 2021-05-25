@@ -8,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class LoadServiceInfoPortDisk implements LoadServiceInfoPort {
@@ -33,6 +36,17 @@ public class LoadServiceInfoPortDisk implements LoadServiceInfoPort {
             return FileMapper.from(json);
         } catch (Exception ex) {
             throw new FailedToLoadException(path.toString(), ex);
+        }
+    }
+
+    @Override
+    public List<String> loadAll() throws FailedToLoadException {
+        try {
+            return Files.list(Paths.get(folderPath))
+                    .map(path -> path.getFileName().toString().replace(".json", ""))
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            throw new FailedToLoadException(folderPath, e);
         }
     }
 }

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 public class ServiceController {
@@ -29,6 +31,11 @@ public class ServiceController {
     public ServiceJson getService(@PathVariable("name") String name) throws FailedToLoadException {
         ServiceInfo service = serviceInfoService.loadServiceInfo(name);
         return FileMapper.from(service);
+    }
+
+    @GetMapping(path = "/service")
+    public List<String> getAllService() throws FailedToLoadException {
+        return serviceInfoService.loadAllServicesInfo();
     }
 
     @PutMapping(path = "/service/{name}")

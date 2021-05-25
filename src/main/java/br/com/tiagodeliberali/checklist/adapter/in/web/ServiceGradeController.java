@@ -4,10 +4,12 @@ import br.com.tiagodeliberali.checklist.core.application.port.out.FailedToLoadEx
 import br.com.tiagodeliberali.checklist.core.application.service.CalculateGradeService;
 import br.com.tiagodeliberali.checklist.core.application.service.ServiceGrade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin
 @RestController
 public class ServiceGradeController {
     private final CalculateGradeService gradeService;

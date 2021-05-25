@@ -44,6 +44,7 @@ public class ServiceGrade {
                         .orElse(Grade.MIN);
 
                 topicInfo.setGrade(topicGrade.grade().doubleValue());
+                topicInfo.setId(topic.getId().id());
                 topicInfo.setWeight(topic.getWeight());
                 topicInfo.setName(topic.getName().name());
 
@@ -52,6 +53,7 @@ public class ServiceGrade {
                         .orElse(topic.getUnusedRequirements(Answer.create()))
                         .forEach(requirement -> topicInfo
                                 .getUnusedRequirements().add(new ServiceRequirementInfo(
+                                        requirement.getId().id(),
                                         requirement.getName().name(),
                                         requirement.getGrade().grade().doubleValue())));
 
@@ -60,6 +62,7 @@ public class ServiceGrade {
                         .orElse(new HashSet<>())
                         .forEach(requirement -> topicInfo
                                 .getMissedRequirements().add(new ServiceRequirementInfo(
+                                        requirement.getId().id(),
                                         requirement.getName().name(),
                                         requirement.getGrade().grade().doubleValue())));
 

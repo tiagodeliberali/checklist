@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 public class ServiceTopicInfo implements Serializable {
+    private String id;
     private String name;
     private double grade;
     private int weight;

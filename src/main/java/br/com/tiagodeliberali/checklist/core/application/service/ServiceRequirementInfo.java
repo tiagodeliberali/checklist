@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class ServiceRequirementInfo {
+    private String id;
     private String name;
     private double grade;
 }

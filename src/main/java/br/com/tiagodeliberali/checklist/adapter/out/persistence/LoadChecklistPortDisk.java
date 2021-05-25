@@ -17,7 +17,7 @@ public class LoadChecklistPortDisk implements LoadChecklistPort {
     private final String folderPath;
 
     @Autowired
-    public LoadChecklistPortDisk(@Value("${folder.path}") String folderPath) {
+    public LoadChecklistPortDisk(@Value("${checklist.folder.path}") String folderPath) {
         this.folderPath = folderPath;
     }
 

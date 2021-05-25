@@ -17,7 +17,7 @@ public class LoadServiceInfoPortDisk implements LoadServiceInfoPort {
     private final String folderPath;
 
     @Autowired
-    public LoadServiceInfoPortDisk(@Value("${folder.path}") String folderPath) {
+    public LoadServiceInfoPortDisk(@Value("${service.folder.path}") String folderPath) {
         this.folderPath = folderPath;
     }
 

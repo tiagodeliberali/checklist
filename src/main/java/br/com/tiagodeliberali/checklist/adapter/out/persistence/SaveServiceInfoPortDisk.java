@@ -17,7 +17,7 @@ public class SaveServiceInfoPortDisk implements SaveServiceInfoPort {
     private final String folderPath;
 
     @Autowired
-    public SaveServiceInfoPortDisk(@Value("${folder.path}") String folderPath) {
+    public SaveServiceInfoPortDisk(@Value("${service.folder.path}") String folderPath) {
         this.folderPath = folderPath;
     }
 

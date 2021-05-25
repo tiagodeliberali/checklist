@@ -17,7 +17,7 @@ public class SaveChecklistPortDisk implements SaveChecklistPort {
     private final String folderPath;
 
     @Autowired
-    public SaveChecklistPortDisk(@Value("${folder.path}") String folderPath) {
+    public SaveChecklistPortDisk(@Value("${checklist.folder.path}") String folderPath) {
         this.folderPath = folderPath;
     }
 

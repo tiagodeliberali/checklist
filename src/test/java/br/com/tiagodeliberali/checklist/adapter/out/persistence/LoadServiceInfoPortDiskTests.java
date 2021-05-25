@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class LoadServiceInfoPortDiskTests {
     @Test
     void load_json() throws FailedToLoadException {
-        LoadServiceInfoPortDisk loadService = new LoadServiceInfoPortDisk("src/test/resources/data/");
+        LoadServiceInfoPortDisk loadService = new LoadServiceInfoPortDisk("src/test/resources/data/services");
 
         ServiceInfo service = loadService.load("service");
 

@@ -59,4 +59,11 @@ public class ServiceInfoService implements ManipulateServiceInfoUseCase {
         service.addRequirement(new EntityId(topicId), new EntityId(requirementId));
         saveServiceInfoPort.save(service);
     }
+
+    @Override
+    public void removeRequirement(String repo, String topicId, String requirementId) throws FailedToLoadException, FailedToSaveException {
+        ServiceInfo service = loadServiceInfoPort.load(repo);
+        service.removeRequirement(new EntityId(topicId), new EntityId(requirementId));
+        saveServiceInfoPort.save(service);
+    }
 }

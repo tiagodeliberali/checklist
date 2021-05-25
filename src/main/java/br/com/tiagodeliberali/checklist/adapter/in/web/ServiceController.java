@@ -9,6 +9,7 @@ import br.com.tiagodeliberali.checklist.core.domain.checklist.EntityAlreadyExist
 import br.com.tiagodeliberali.checklist.core.domain.service.ServiceInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -46,5 +47,12 @@ public class ServiceController {
                                @PathVariable("topic") String topic,
                                @PathVariable("requirement") String requirement) throws FailedToLoadException, FailedToSaveException {
         serviceInfoService.addRequirement(name, topic, requirement);
+    }
+
+    @DeleteMapping(path = "/service/{name}/{topic}/{requirement}")
+    public void removeRequirement(@PathVariable("name") String name,
+                               @PathVariable("topic") String topic,
+                               @PathVariable("requirement") String requirement) throws FailedToLoadException, FailedToSaveException {
+        serviceInfoService.removeRequirement(name, topic, requirement);
     }
 }

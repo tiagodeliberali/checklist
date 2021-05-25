@@ -10,4 +10,5 @@ public interface ManipulateServiceInfoUseCase {
     void create(String repo) throws EntityAlreadyExistException, FailedToSaveException;
     void addTopic(String repo, String topic) throws FailedToLoadException, FailedToSaveException;
     void addRequirement(String repo, String topic, String requirement) throws FailedToLoadException, FailedToSaveException;
+    void removeRequirement(String repo, String topic, String requirement) throws FailedToLoadException, FailedToSaveException;
 }

@@ -21,6 +21,10 @@ public class Answer {
         missedRequirements.add(requirementId);
     }
 
+    public void removeMissingRequirement(EntityId requirementId) {
+        missedRequirements.remove(requirementId);
+    }
+
     public Iterator<EntityId> getIterator() {
         return missedRequirements.iterator();
     }

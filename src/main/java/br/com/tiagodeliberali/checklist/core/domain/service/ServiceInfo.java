@@ -1,7 +1,6 @@
 package br.com.tiagodeliberali.checklist.core.domain.service;
 
 import br.com.tiagodeliberali.checklist.core.domain.checklist.EntityId;
-import br.com.tiagodeliberali.checklist.core.domain.checklist.TopicName;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -33,6 +32,14 @@ public class ServiceInfo {
         addTopic(topicId);
 
         answers.get(topicId).addMissingRequirement(requirementId);
+    }
+
+    public void removeRequirement(EntityId topicId, EntityId requirementId) {
+        if (!answers.containsKey(topicId)) {
+            return;
+        }
+
+        answers.get(topicId).removeMissingRequirement(requirementId);
     }
 
     public int count() {

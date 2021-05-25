@@ -268,7 +268,7 @@
     },
     {
       "id": "monit",
-      "name": "monitoramento",
+      "name": "Monitoramento",
       "weight": 4,
       "topics": [
         {
@@ -482,7 +482,7 @@
     },
     {
       "id": "docum",
-      "name": "documentação",
+      "name": "Documentação",
       "weight": 1,
       "topics": [
         {

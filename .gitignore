@@ -39,3 +39,4 @@ out/
 ### vaadin
 /node_modules/
 /target/
+/data/

@@ -14,6 +14,7 @@ public class ServiceTopicInfo implements Serializable {
     private String name;
     private double grade;
     private int weight;
+    private boolean missing;
     private List<ServiceRequirementInfo> missedRequirements;
     private List<ServiceRequirementInfo> unusedRequirements;
 

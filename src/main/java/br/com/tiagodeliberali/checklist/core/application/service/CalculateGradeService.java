@@ -9,6 +9,9 @@ import br.com.tiagodeliberali.checklist.core.domain.service.ServiceInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class CalculateGradeService implements CalculateGradesUseCase {
     private final LoadChecklistPort loadChecklistPort;
@@ -27,5 +30,18 @@ public class CalculateGradeService implements CalculateGradesUseCase {
         ServiceInfo service = loadServiceInfoPort.load(serviceName);
 
         return ServiceGrade.build(checklist, service);
+    }
+
+    @Override
+    public List<ServiceGradeHeader> calculateAll(String checklistName) throws FailedToLoadException {
+        Checklist checklist = loadChecklistPort.load(checklistName);
+
+        List<ServiceGradeHeader> list = new ArrayList<>();
+        for (String s : loadServiceInfoPort.loadAll()) {
+            ServiceInfo service = loadServiceInfoPort.load(s);
+            ServiceGradeHeader build = ServiceGrade.buildHeader(checklist, service);
+            list.add(build);
+        }
+        return list;
     }
 }

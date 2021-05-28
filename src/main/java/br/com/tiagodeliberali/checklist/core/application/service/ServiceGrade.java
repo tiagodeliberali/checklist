@@ -82,5 +82,21 @@ public class ServiceGrade {
 
         return serviceGrade;
     }
+
+    public static ServiceGradeHeader buildHeader(Checklist checklist, ServiceInfo service) {
+        ServiceGradeHeader serviceGrade = new ServiceGradeHeader();
+        serviceGrade.setGrade(checklist.calculate(service).grade().doubleValue());
+        serviceGrade.setRepo(service.getRepo());
+
+        checklist.getIterator().forEachRemaining(theme -> {
+            ServiceThemeHeader themeInfo = new ServiceThemeHeader();
+            themeInfo.setName(theme.getName().name());
+            themeInfo.setWeight(theme.getWeight());
+            themeInfo.setGrade(theme.calculate(service).grade().doubleValue());
+            serviceGrade.getThemesHeader().add(themeInfo);
+        });
+
+        return serviceGrade;
+    }
 }
 

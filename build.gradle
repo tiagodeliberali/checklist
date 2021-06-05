@@ -6,7 +6,6 @@ plugins {
 
 group = 'br.com.tiagodeliberali'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '16'
 
 repositories {
 	mavenCentral()
@@ -24,6 +23,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.5.8'
+	implementation 'io.micrometer:micrometer-registry-prometheus:1.5.1'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
